@@ -3,24 +3,14 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 
 function Edit() {
-  const [data, setData] = useState({
-    logo: null,
-    storeName: '',
-    storeType: '',
-    storeDes: '',
-    email: '',
-    pass: '',
-    phone: '',
-    address: ''
-  });
-  const [logoFile, setLogoFile] = useState(null);
+  const [data, setData] = useState({});
   const { storeId } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
     axios.get(`/get_stores/${storeId}`)
       .then((res) => {
-        setData(res.data[0]);
+        setData(res.data[0]);  // Assuming your API returns an array and you want the first element
       })
       .catch((err) => console.log(err));
   }, [storeId]);
@@ -28,17 +18,7 @@ function Edit() {
   function handleSubmit(e) {
     e.preventDefault();
 
-    const formData = new FormData();
-    formData.append('logo', logoFile);
-    Object.entries(data).forEach(([key, value]) => {
-      formData.append(key, value);
-    });
-
-    axios.put(`/edit_stores/${storeId}`, formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-    })
+    axios.put(`/edit_stores/${storeId}`, data)
       .then((res) => {
         navigate('/');
         console.log(res);
@@ -51,11 +31,6 @@ function Edit() {
       <h1>Store {storeId}</h1>
       <Link to='/' className="">Back</Link>
       <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="logo">logo</label>
-          <input type="file" name="logo" onChange={(e) => setLogoFile(e.target.files[0])} />
-          {data.logo && <img src={`images//${data.logo}`} alt="Store Logo" style={{ maxWidth: '200px', marginTop: '10px' }} />}
-        </div>
         <div className="form-group">
           <label htmlFor="storeName">storeName</label>
           <input value={data.storeName || ''} type="text" name="storeName" onChange={(e) => setData({ ...data, storeName: e.target.value })} />

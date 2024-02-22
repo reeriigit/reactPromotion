@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 
-function Edit() {
+function EditStore() {
   const [data, setData] = useState({
     logo: null,
     storeName: '',
@@ -39,10 +39,12 @@ function Edit() {
         'Content-Type': 'multipart/form-data'
       }
     })
-      .then((res) => {
-        navigate('/');
+    .then((res) => {
+        const { email, pass } = data;
+        navigate(`/stores/mulimages/${email}/${pass}`);
         console.log(res);
       })
+      
       .catch((err) => console.log(err));
   }
 
@@ -54,16 +56,21 @@ function Edit() {
         <div className="form-group">
           <label htmlFor="logo">logo</label>
           <input type="file" name="logo" onChange={(e) => setLogoFile(e.target.files[0])} />
-          {data.logo && <img src={`images//${data.logo}`} alt="Store Logo" style={{ maxWidth: '200px', marginTop: '10px' }} />}
+          {data.logo && <img src={`images/${data.logo}`} alt="Store Logo" style={{ maxWidth: '200px', marginTop: '10px' }} />}
         </div>
         <div className="form-group">
           <label htmlFor="storeName">storeName</label>
           <input value={data.storeName || ''} type="text" name="storeName" onChange={(e) => setData({ ...data, storeName: e.target.value })} />
         </div>
         <div className="form-group">
-          <label htmlFor="storeType">storeType</label>
-          <input value={data.storeType || ''} type="text" name="storeType" onChange={(e) => setData({ ...data, storeType: e.target.value })} />
-        </div>
+  <label htmlFor="storeType">Store Type</label>
+  <select value={data.storeType} onChange={(e) => setData({ ...data, storeType: e.target.value })}>
+    <option value="">Choose Store Type</option>
+    <option value="1">ร้านบริการ</option>
+    <option value="2">ร้านอาหาร</option>
+  </select>
+</div>
+
         <div className="form-group">
           <label htmlFor="storeDes">storeDes</label>
           <input value={data.storeDes || ''} type="text" name="storeDes" onChange={(e) => setData({ ...data, storeDes: e.target.value })} />
@@ -90,4 +97,4 @@ function Edit() {
   );
 }
 
-export default Edit;
+export default EditStore;

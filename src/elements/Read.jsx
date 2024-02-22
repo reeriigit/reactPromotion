@@ -21,6 +21,9 @@ function Read() {
             {data.map((store) => (
                 <ul key={store.storeId}>
                     <li>
+                        <b>Store ID:</b> {store.logo}
+                    </li>
+                    <li>
                         <b>Store ID:</b> {store.storeId}
                     </li>
                     <li>

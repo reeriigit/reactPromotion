@@ -35,6 +35,7 @@ function Home() {
       <table>
         <thead>
           <tr>
+            <th>logo</th>
             <th>storeId</th>
             <th>storeName</th>
             <th>storeType</th>
@@ -47,26 +48,30 @@ function Home() {
           </tr>
         </thead>
         <tbody>
-          {data.map((store) => {
-            return(
-            <tr key={store.storeId}>
-              <td>{store.storeId}</td>
-              <td>{store.storeName}</td>
-              <td>{store.storeType}</td>
-              <td>{store.storeDes}</td>
-              <td>{store.email}</td>
-              <td>{store.pass}</td>
-              <td>{store.phone}</td>
-              <td>{store.address}</td>
-              <td>
-                <Link className="btn btn-success" to={`/read/${store.storeId}`}>Read</Link>
-                <Link className="btn btn-success" to={`/edit/${store.storeId}`}>Edit</Link>
-                <button onClick={() => handDelete(store.storeId)} className="btn btn-danger">Delete</button>
-              </td>
-            </tr>
-            )
-})}
-        </tbody>
+  {data.map((store) => (
+    <tr key={store.storeId}>
+      <img
+  src={`images/${store.logo}`}
+  alt="Logo"
+  style={{ maxWidth: '50px', maxHeight: '50px' }}
+/>
+
+      <td>{store.storeId}</td>
+      <td>{store.storeName}</td>
+      <td>{store.storeType}</td>
+      <td>{store.storeDes}</td>
+      <td>{store.email}</td>
+      <td>{store.pass}</td>
+      <td>{store.phone}</td>
+      <td>{store.address}</td>
+      <td>
+        <Link className="btn btn-success" to={`/read/${store.storeId}`}>Read</Link>
+        <Link className="btn btn-success" to={`/edit/${store.storeId}`}>Edit</Link>
+        <button onClick={() => handDelete(store.storeId)} className="btn btn-danger">Delete</button>
+      </td>
+    </tr>
+  ))}
+</tbody>
       </table>
     </div>
   );
