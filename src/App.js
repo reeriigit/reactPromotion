@@ -9,6 +9,7 @@ import Login from './web/Login';
 import CreateStore from './stores/CreateStore';
 import Mulimages from './stores/Mulimages';
 import EditStore from './stores/EditStore';
+import AlertStatus from './stores/AlertStatus';
 
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
       <Route path="/stores/create" element={<CreateStore/>} />
       <Route path="/stores/editstore/:storeId" element={<EditStore/>} />
       <Route path="/stores/mulimages/:email/:pass" element={<Mulimages />} />
+      <Route path="/stores/alertstatus" element={<AlertStatus />} />
 
     </Routes>
   </BrowserRouter>

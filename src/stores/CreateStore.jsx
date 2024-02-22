@@ -6,7 +6,7 @@ function CreateStore() {
   const [values, setValues] = useState({
     logo: '',
     storeName: '',
-    storeType: '',
+    storeType: 1,
     storeDes: '',
     email: '',
     pass: '',
@@ -43,6 +43,7 @@ function CreateStore() {
     setValues({ ...values, logo: file });
     setPreviewLogo(URL.createObjectURL(file));
   }
+  
 
   return (
     <div className="container vh-100 vw-100 bg-primary">

@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function ImageUploadForm() {
   const [storeId, setStoreId] = useState("");
   const [images, setImages] = useState([]);
+  const [previewImages, setPreviewImages] = useState([]);
+  const navigate = useNavigate();
 
   const handleStoreIdChange = (e) => {
     setStoreId(e.target.value);
@@ -12,6 +15,12 @@ function ImageUploadForm() {
   const handleImageChange = (e) => {
     const files = e.target.files;
     setImages(files);
+
+    // Generate preview URLs for the selected images
+    const imagePreviews = Array.from(files).map((file) =>
+      URL.createObjectURL(file)
+    );
+    setPreviewImages(imagePreviews);
   };
 
   const handleSubmit = async (e) => {
@@ -32,6 +41,9 @@ function ImageUploadForm() {
       });
 
       console.log(response.data);
+
+      // Redirect to a specific route after successful image upload
+      navigate(`/stores/alertstatus`);
     } catch (error) {
       console.error("Error uploading images:", error);
     }
@@ -56,6 +68,21 @@ function ImageUploadForm() {
           multiple
           onChange={handleImageChange}
         />
+        {/* Display image previews */}
+        <div>
+          {previewImages.map((preview, index) => (
+            <img
+              key={index}
+              src={preview}
+              alt={`Preview ${index + 1}`}
+              style={{
+                maxWidth: "100px",
+                maxHeight: "100px",
+                marginRight: "5px",
+              }}
+            />
+          ))}
+        </div>
         <br />
         <button type="submit">Upload</button>
       </form>
