@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import ImageUploadForm from "./ImageUploadForm";
 
 function Mulimages() {
   const { email, pass } = useParams();
@@ -57,6 +58,7 @@ function Mulimages() {
           ))}
         </tbody>
       </table>
+      <ImageUploadForm/>
     </div>
   );
 }
