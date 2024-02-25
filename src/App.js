@@ -10,6 +10,9 @@ import CreateStore from './stores/CreateStore';
 import Mulimages from './stores/Mulimages';
 import EditStore from './stores/EditStore';
 import AlertStatus from './stores/AlertStatus';
+import StoreData from './admin/StoreData';
+import EditStoredata from './admin/EditStoreData';
+import RegisterForm from './web/RegisterForm';
 
 
 function App() {
@@ -24,7 +27,11 @@ function App() {
       <Route path="/stores/create" element={<CreateStore/>} />
       <Route path="/stores/editstore/:storeId" element={<EditStore/>} />
       <Route path="/stores/mulimages/:email/:pass" element={<Mulimages />} />
-      <Route path="/stores/alertstatus" element={<AlertStatus />} />
+      <Route path="/stores/alertstatus/:email/:pass" element={<AlertStatus />} />
+      <Route path="/admin/storedata" element={<StoreData />} />
+      <Route path="/admin/editstoredata/:storeId" element={<EditStoredata />} />
+      <Route path="/web/register" element={<RegisterForm />} />
+      
 
     </Routes>
   </BrowserRouter>

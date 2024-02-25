@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-function ImageUploadForm() {
-  const [storeId, setStoreId] = useState("");
+function ImageUploadForm(props) {
+  const [storeId, setStoreId] = useState(props.paramId);
   const [images, setImages] = useState([]);
   const [previewImages, setPreviewImages] = useState([]);
   const navigate = useNavigate();
@@ -51,9 +51,14 @@ function ImageUploadForm() {
 
   return (
     <div>
+
       <h3>Image Upload Form</h3>
+      <h1>{props.paramId}</h1>
       <form encType="multipart/form-data" onSubmit={handleSubmit}>
-        <label htmlFor="storeId">Store ID:</label>
+      
+        <label htmlFor="storeId">Store ID: </label>
+  
+      
         <input
           type="text"
           name="storeId"

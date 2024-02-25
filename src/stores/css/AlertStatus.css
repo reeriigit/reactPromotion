@@ -1,0 +1,34 @@
+.containerprofile{
+    padding: 20px;
+    margin: 100px;
+    border-radius: 10px;
+    box-shadow: 1px  3px  5px #000;
+    text-align: center;
+}
+.profile {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px; /* Add margin for spacing between profiles */
+    padding: 100px 200px;
+  }
+  
+  .profile img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+   /* Add margin for spacing between image and button */
+    scale: 3.0;  
+    box-shadow: 2px 3px 3px #737373;
+}
+.bardata{
+    padding: 100px;
+    position: relative;
+    margin: 100px;
+    width: 100%;
+    box-shadow: -1px 1px 3px #737373;
+    
+   
+}

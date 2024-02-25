@@ -58,7 +58,10 @@ function Mulimages() {
           ))}
         </tbody>
       </table>
-      <ImageUploadForm/>
+      {data.map((store) => (
+        <ImageUploadForm key={store.storeId} paramId={store.storeId} />
+      ))}
+
     </div>
   );
 }
