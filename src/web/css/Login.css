@@ -1,11 +1,158 @@
 *{
-    padding: 0;
-    margin: 0;
+    padding: 0px;
+    margin: 0px;
+    box-sizing: 0px;
+}
+body{
+    position: relative;
+    background:  rgb(250, 214, 33);
+    overflow: hidden;
+}
+.bodybu{
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    background: #fff;
+    transform: rotate(45deg);
+    scale: 2;
+    box-shadow: 1px 1px 7px #000;
+    z-index: -1;
+
+
 }
 
-.rows{
+.minicontainer{
+    margin: 100px 350px;
     display: flex;
-    /* border: 5px solid red; */
-    height: 700px;
-    padding: 100px;
+    height: 500px;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 1px 1px 7px #000;
+
+}
+.minicontainer .blockimg{
+    width: 100%;
+    height: 100%;
+    box-shadow: 0 2px 2px #000;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+}
+.minicontainer .blockimg img{
+    width: 100%;
+    height: 100%;
+   
+}
+.minicontainer .blockform{
+    width: 100%;
+    height: 100%;
+    
+    
+}
+.minicontainer .blockform form{
+    margin: 100px;
+    position: relative;
+    
+    
+}
+ .blockform form input{
+    margin-bottom: 20px;
+    
+    
+}
+form .blockpro{
+    position: relative;
+    
+    top: -20px;
+    text-align: center;
+
+}
+.blockpro h3{
+    font-weight: 400px;
+    font-size: 16px;
+}
+.blockpro b nav{
+    font-size: 30px;
+}
+.blockpro span{
+    color: rgb(250, 214, 33);
+}
+.blockpro img{
+    width: 60px;
+    height: 40px;
+    scale: 3.7;
+    transform: rotate(45deg);
+    margin-bottom: 10px;
+}
+.loginbutton{
+    width: 100%;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    background: rgb(255, 223, 65);
+    color: #fff;
+    font-weight: 600;
+}
+.blockimg .blockwhite{
+    position: absolute;
+    width: 95%;
+    height: 50px;
+    background: #bbbbbb;
+    z-index: 1;
+    margin: 10px;
+    bottom: 0px;
+    border-radius: 10px;
+    opacity: .5;
+    backdrop-filter: blur(-20px);
+
+}
+.btnregis{
+    display: inline-block;
+    position: absolute;
+    background: #fff;
+    width: 100px;
+    z-index: 3;
+    margin: 5px;
+    bottom: 13px;
+    right: 15px;
+    padding: 6px;
+    text-decoration: none;
+    border-radius: 10px;
+    color:  rgb(255, 223, 65);
+    font-weight: 600;
+    font-size: 15px;
+    text-align: center;
+    
+}
+.textsignup{
+    position: absolute;
+    z-index: 4;
+    color: #fff;
+    background: none;
+    bottom: 25px;
+    left: 30px;
+
+}
+.titletaty{
+    position: absolute;
+    text-align: center;
+    margin: 90px;
+    color: #fff;
+    
+}
+.titletaty p:first-child{
+    font-weight: 600;
+    font-size: 50px;
+
+}
+.titletaty p:last-child{
+    font-weight: 600;
+
+}
+.btnstore{
+    position: absolute;
+    right: 0px;
+    bottom: -30px;
+    font-size: 10px;
 }

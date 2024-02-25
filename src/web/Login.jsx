@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
+import "./css/Login.css"
+import imagelogin from "./css/imagelogin.jpg";
+import logopati from "./css/logopati2.png";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -57,10 +60,27 @@ const Login = () => {
   
 
   return (
-    <div className="minicontainer">
-      <h3>Login User</h3>
+     <div className="bodylogin">
+      <div className="bodybu"></div>
+      <div className="minicontainer">
+      <div className="blockimg">
+        <div className="titletaty">
+          <p>Select Your Promotion</p>
+          <p>Adop the peach</p>
+        </div>
+        <Link to='/web/register' className="btnregis">Sign Up</Link>
+        <div className="textsignup">Don't have an account ?</div>
+        <img src={imagelogin} alt="Description" />
+        <div className="blockwhite"></div>
+      </div>
+      <div className="blockform">
       <form onSubmit={handleSubmit}>
-        <div className="form-group">
+        <div className="blockpro">
+        <img src={logopati} alt="Description" />
+          
+        <h3><b>WELL COME <span>P</span>A<span>T</span>I !</b></h3>
+        </div>
+        <div className="">
           <label htmlFor="username">Username</label>
           <input
             type="text"
@@ -70,7 +90,7 @@ const Login = () => {
             className="form-control"
           />
         </div>
-        <div className="form-group">
+        <div className="">
           <label htmlFor="password">Password</label>
           <input
             type="password"
@@ -80,11 +100,12 @@ const Login = () => {
             className="form-control"
           />
         </div>
-        <button type="submit" className="btn btn-primary">Login</button>
-        <Link to='/web/register' className="btn btn-secondary">Create User</Link>
-        <Link to='/stores/create' className="btn btn-secondary">Create User</Link>
+        <button type="submit" className="loginbutton">Login</button>
+        <Link to='/stores/create' className="btnstore">Want to be Store</Link>
       </form>
+      </div>
     </div>
+     </div>
   );
 };
 
