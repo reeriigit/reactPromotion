@@ -3,10 +3,11 @@
     margin: 0px;
     box-sizing: 0px;
 }
-body{
-    position: relative;
+.bodylogin{
+    position: absolute;
     background:  rgb(250, 214, 33);
     overflow: hidden;
+    z-index: -1;
 }
 .bodybu{
     position: absolute;
@@ -53,6 +54,7 @@ body{
 .minicontainer .blockform form{
     margin: 100px;
     position: relative;
+    
     
     
 }

@@ -4,64 +4,64 @@ import { Link, useParams } from "react-router-dom";
 import ImageUploadForm from "./ImageUploadForm";
 
 function Mulimages() {
-  const { email, pass } = useParams();
+  const { user_id } = useParams();
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    axios.get(`/get_stores_check/${email}/${pass}`)
+    axios.get(`/get_stores_check/${user_id}`)
       .then((res) => {
         setData(res.data);
       })
       .catch((err) => console.error(err));
-  }, [email, pass]);
+  }, [user_id]);
 
   return (
-    <div className="container-fluid bg-primary vh-100 vm-100">
-      <h3>Stores</h3>
-      <table className="table">
-        <thead>
-          <tr>
-            <th>Logo</th>
-            <th>Store ID</th>
-            <th>Store Name</th>
-            <th>Store Type</th>
-            <th>Store Description</th>
-            <th>Email</th>
-            <th>Password</th>
-            <th>Phone</th>
-            <th>Address</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.map((store) => (
-            <tr key={store.storeId}>
-              <td>
-                <img
-                  src={`/images/${store.logo}`}
-                  alt={`Logo of ${store.storeName}`}
-                  style={{ maxWidth: '50px', maxHeight: '50px' }}
-                />
-              </td>
-              <td>{store.storeId}</td>
-              <td>{store.storeName}</td>
-              <td>{store.storeType}</td>
-              <td>{store.storeDes}</td>
-              <td>{store.email}</td>
-              <td>{store.pass}</td>
-              <td>{store.phone}</td>
-              <td>{store.address}</td>
-              <td>
-                <Link className="btn btn-success" to={`/stores/editstore/${store.storeId}`}>Edit</Link>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+    <div className="container mt-4">
+      <h3 className="mb-4">Stores</h3>
+
+      {data.map((store) => (
+        <div key={store.storeId} className="mb-4">
+          <div className="text-center">
+            <img
+              src={`/images/${store.logo}`}
+              alt={`Logo of ${store.storeName}`}
+              className="img-fluid"
+              style={{ maxWidth: '100px', maxHeight: '100px' }}
+            />
+          </div>
+          <div className="mt-2">
+            <strong>Store ID:</strong> {store.storeId}
+          </div>
+          <div>
+            <strong>Store Name:</strong> {store.storeName}
+          </div>
+          <div>
+            <strong>Store Type:</strong> {store.storeType}
+          </div>
+          <div>
+            <strong>Store Description:</strong> {store.storeDes}
+          </div>
+          <div>
+            <strong>Email:</strong> {store.email}
+          </div>
+          <div>
+            <strong>Password:</strong> {store.pass}
+          </div>
+          <div>
+            <strong>Phone:</strong> {store.phone}
+          </div>
+          <div>
+            <strong>Address:</strong> {store.address}
+          </div>
+          <div className="mt-2">
+            <Link className="btn btn-success" to={`/stores/editstore/${store.storeId}`}>Edit</Link>
+          </div>
+        </div>
+      ))}
+
       {data.map((store) => (
         <ImageUploadForm key={store.storeId} paramId={store.storeId} />
       ))}
-
     </div>
   );
 }

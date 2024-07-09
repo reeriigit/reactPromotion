@@ -1,20 +1,56 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { Container, Form, Button, Row, Col } from 'react-bootstrap';
+import { Form, Button, Container, Row, Col } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-const RegisterForm = () => {
+const RegisterStore = () => {
   const navigate = useNavigate();
-
   const [formData, setFormData] = useState({
+    referral_code: '',
+    referred_by: '',
     username: '',
     email: '',
     password: '',
     full_name: '',
     address: '',
     phone_number: '',
-    user_type: 1,
+    user_type: 3,
   });
+
+  const checkReferralCode = useCallback(async (code) => {
+    try {
+      const response = await axios.get(`/check_referral_code/${code}`);
+      return response.data.exists; // Adjust based on your API response
+    } catch (error) {
+      console.error('Error checking referral code:', error);
+      return false;
+    }
+  }, []);
+
+  const generateReferralCode = useCallback(async () => {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result = '';
+    for (let i = 0; i < 10; i++) {
+      result += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+    const exists = await checkReferralCode(result);
+    if (exists) {
+      return generateReferralCode(); // Recurse until a unique code is generated
+    }
+    return result;
+  }, [checkReferralCode]);
+
+  useEffect(() => {
+    const setUniqueReferralCode = async () => {
+      const code = await generateReferralCode();
+      setFormData((prevData) => ({
+        ...prevData,
+        referral_code: code,
+      }));
+    };
+    setUniqueReferralCode();
+  }, [generateReferralCode]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -24,17 +60,17 @@ const RegisterForm = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    axios.post('/users_register', formData)
-      .then((response) => {
-        console.log('User created successfully:', response.data);
-        navigate(`/web/login`);
-      })
-      .catch((error) => {
-        console.error('Error creating user:', error.response.data);
-      });
+    try {
+      await axios.post('/users_register', formData);
+      console.log('User created successfully:', formData);
+      const { username, password } = formData;
+      navigate(`/stores/create/${username}/${password}`);
+    } catch (error) {
+      console.error('Error creating user:', error.response.data);
+    }
   };
 
   return (
@@ -43,6 +79,10 @@ const RegisterForm = () => {
         <Col xs={12} md={6}>
           <h3>Register</h3>
           <Form onSubmit={handleSubmit}>
+            <Form.Group controlId="referred_by">
+              <Form.Label>รหัสผู้แนะนำ:</Form.Label>
+              <Form.Control type="text" name="referred_by" value={formData.referred_by} onChange={handleChange} />
+            </Form.Group>
             <Form.Group controlId="username">
               <Form.Label>Username:</Form.Label>
               <Form.Control type="text" name="username" value={formData.username} onChange={handleChange} />
@@ -69,8 +109,8 @@ const RegisterForm = () => {
             </Form.Group>
             <Form.Group controlId="user_type">
               <Form.Label>User Type:</Form.Label>
-              <Form.Control as="select" name="user_type" value={formData.user_type} onChange={handleChange}>  
-                <option value="2">Buyer</option>
+              <Form.Control as="select" name="user_type" value={formData.user_type} onChange={handleChange}>
+                <option value="3">Store</option>
               </Form.Control>
             </Form.Group>
             <Button variant="primary" type="submit">
@@ -83,4 +123,4 @@ const RegisterForm = () => {
   );
 };
 
-export default RegisterForm;
+export default RegisterStore;

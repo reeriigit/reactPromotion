@@ -1,0 +1,109 @@
+.bgpro{
+    /* border: 1px solid #000; */
+    width: 100% ;
+    height: 100%;
+    padding: 10px 100px ;
+
+}
+.barsearch{
+    height: 50px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 1px 1px 5px #000;
+    padding: 5px;
+
+}
+.barbutton{
+    height: 50px;
+    padding: 10px 0px;
+    margin-bottom: 10px;
+}
+.datapushpro{
+    background: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 1px 1px 5px #000;
+}
+.barbutton button.active {
+    background-color: rgb(255, 223, 80);
+    color: #fff;
+    box-shadow: 1px 1px 5px #a4a4a4;
+  }
+
+  .barbutton button{
+    border: none;
+    padding: 5px;
+    border-radius: 5px;
+    margin-right: 10px;
+  }
+
+  .popup {
+
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border: none;
+    padding: 20px;
+    z-index: 1000;
+    width: 400px;
+    height: 400px;
+    overflow: auto;
+    border-radius: 10px;
+    box-shadow: 1px 2px 5px #000;
+  }
+  .popup button {
+    position: absolute;
+    bottom: 10px;
+    width: 90%;
+    height: 40px;
+    border: none;
+    background: red;
+    color: #fff;
+    border-radius: 5px;
+    box-shadow: 2px 1px 4px #000;
+  }
+  .buttondes{
+    padding: 5px;
+    border-radius: 10px;
+    border: none;
+    background: rgb(10, 199, 35);
+    color: #fff;
+    box-shadow: 1px 2px 5px #000;
+  }
+
+  .delete-confirmation-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border: 1px solid #ccc;
+    z-index: 1000;
+    box-shadow: 1px 2px 5px #000;
+    border-radius: 5px;
+    width: 400px;
+    text-align: center;
+    
+  }
+  .delete-confirmation-popup button{
+    margin-right: 10px;
+  }
+  .btndel{
+    margin-left: 10px;
+
+  }
+  .Generalinformation{
+    box-shadow: 1px 1px 5px #808080;
+    padding: 15px;
+    border-radius: 2px;
+    margin-bottom: 30px;
+  }
+  .titlepromotion{
+    font-size: 25px;
+    font-weight: 600;
+    color: #ffc355;
+  }
+  

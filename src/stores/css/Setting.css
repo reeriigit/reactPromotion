@@ -1,0 +1,65 @@
+.consetting{
+    border: 1px solid #000;
+    position: relative;
+    
+
+}
+.logoUser{
+    display: flex;
+    align-items: center;
+
+}
+.logoUser img{
+   width: 50px;
+   height: 50px;
+   border-radius: 25px;
+   overflow: hidden;
+   box-shadow: 1px 1px 5px #000;
+}
+.logoUser > div{
+    padding: 0px 10px ;
+    width: auto;
+    height: 50px;
+}
+.logoUser > div p{
+    margin: 0px;
+    display: block;
+    margin-right: 10px;
+}
+.logoUser > div >p {
+    font-size: 12px;
+    color: #000;
+    
+
+}
+
+.rowset{
+    display: flex;
+    padding: 50px 100px;
+    position: relative;
+    height: auto;
+
+}
+.rowset .cols:first-child{
+    position: relative;
+    box-shadow: 1px 1px 5px #000;
+    width: 25%;
+    display: inline-block;
+    padding: 20px;
+    border-radius: 10px;
+    height: auto;
+}
+.rowset .cols:last-child{
+    position: relative;
+    width: 75%;
+    padding: 10px;
+    height: auto;
+  
+}
+.cols > div > button{
+    background: none;
+    width: 100%;
+    text-align: left;
+    border: none;
+    padding: 5px;
+}

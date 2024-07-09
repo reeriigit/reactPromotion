@@ -34,15 +34,16 @@ const Login = () => {
   
         if (users.length > 0) {
           const user_type = users[0].user_type; // Access user_id from the first user in the array
+          const user_id = users[0].user_id;
   
           if (user_type===1) {
-            navigate(`/admin/${user_type}`);
+            navigate(`/admin/${user_id}`);
           }
           if (user_type===2) {
-            navigate(`/web/${user_type}`);
+            navigate(`/web/${user_id}`);
           }
           if (user_type===3) {
-            navigate(`/stores/${user_type}`);
+            navigate(`/stores/alertstatus/${user_id}`);
           }
   
           console.log('Login successful:', response.data);
@@ -101,7 +102,7 @@ const Login = () => {
           />
         </div>
         <button type="submit" className="loginbutton">Login</button>
-        <Link to='/stores/create' className="btnstore">Want to be Store</Link>
+        <Link to='/stores/regisstore' className="btnstore">Want to be Store</Link>
       </form>
       </div>
     </div>

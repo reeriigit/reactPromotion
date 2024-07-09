@@ -43,38 +43,45 @@ function ImageUploadForm(props) {
       console.log(response.data);
 
       // Redirect to a specific route after successful image upload
-      navigate(`/stores/alertstatus`);
+      navigate(`/web/login`);
     } catch (error) {
       console.error("Error uploading images:", error);
     }
   };
 
   return (
-    <div>
+    <div className="mt-4">
+      <h3 className="mb-3">Image Upload Form</h3>
 
-      <h3>Image Upload Form</h3>
-      <h1>{props.paramId}</h1>
       <form encType="multipart/form-data" onSubmit={handleSubmit}>
-      
-        <label htmlFor="storeId">Store ID: </label>
-  
-      
-        <input
-          type="text"
-          name="storeId"
-          value={storeId}
-          onChange={handleStoreIdChange}
-        />
-        <br />
-        <label htmlFor="mulimages">Select Images:</label>
-        <input
-          type="file"
-          name="mulimages"
-          multiple
-          onChange={handleImageChange}
-        />
+        <div className="mb-3">
+          <label htmlFor="storeId" className="form-label">
+            Store ID:
+          </label>
+          <input
+            type="text"
+            className="form-control"
+            name="storeId"
+            value={storeId}
+            onChange={handleStoreIdChange}
+          />
+        </div>
+
+        <div className="mb-3">
+          <label htmlFor="mulimages" className="form-label">
+            Select Images:
+          </label>
+          <input
+            type="file"
+            className="form-control"
+            name="mulimages"
+            multiple
+            onChange={handleImageChange}
+          />
+        </div>
+
         {/* Display image previews */}
-        <div>
+        <div className="mb-3">
           {previewImages.map((preview, index) => (
             <img
               key={index}
@@ -88,8 +95,12 @@ function ImageUploadForm(props) {
             />
           ))}
         </div>
-        <br />
-        <button type="submit">Upload</button>
+
+        <div className="mb-3">
+          <button type="submit" className="btn btn-primary">
+            Upload
+          </button>
+        </div>
       </form>
     </div>
   );
