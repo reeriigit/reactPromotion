@@ -1,20 +1,20 @@
-// Promotion.jsx
+// Product.jsx
 
 import '../css/Promotion.css';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import { MDBCol } from "mdbreact";
-import ProductTypeList from '../components/ProductTypeList';
-import InsertProductType from '../components/InsertProductType';
-import UpdateProductType from '../components/UpdateProductType';
+import ProductList from '../components/ProductList';
+import InsertProduct from '../components/InsertProduct';
+import UpdateProduct from '../components/UpdateProduct';
 
 function Product() {
-  const [activeComponent, setActiveComponent] = useState('ProductTypeList');
+  const [activeComponent, setActiveComponent] = useState('ProductList');
   const { user_id } = useParams();
   const navigate = useNavigate();
   const [data, setStore] = useState(null);
-  const [product_type_id, setProType] = useState(null);
+  const [product_id, setProductId] = useState(null);
 
   const handleButtonClick = (component) => {
     setActiveComponent(component);
@@ -25,18 +25,17 @@ function Product() {
       .then((res) => {
         setStore(res.data[0]);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log("i heare",err));
   }, [user_id]);
 
-  const handleInsertPromotionSuccess = () => {
-    navigate(`/stores/producttype/${user_id}`);
+  const handleInsertProductSuccess = () => {
+    navigate(`/stores/product/${user_id}`);
     window.location.reload();
   };
 
-  const onchangeUpdate = (product_type_id) => {
-    setProType(product_type_id);
-    console.log("fuck you2 ",product_type_id);
-    setActiveComponent('UpdateProductType');
+  const onchangeUpdate = (product_id) => {
+    setProductId(product_id);
+    setActiveComponent('UpdateProduct');
   };
 
   return (
@@ -44,22 +43,21 @@ function Product() {
       <div className="bgpro">
         <div className='barsearch'>
           <MDBCol md="6">
-          
             <input className="form-control" type="text" placeholder="Search" aria-label="Search" />
           </MDBCol>
         </div>
         <div className="barbutton">
           <button
-            onClick={() => handleButtonClick('ProductTypeList')}
-            className={activeComponent === 'ProductTypeList' ? 'active' : ''}
+            onClick={() => handleButtonClick('ProductList')}
+            className={activeComponent === 'ProductList' ? 'active' : ''}
           >
-            รายการประเภทสินค้า 
+            รายการสินค้า
           </button>
           <button
-            onClick={() => handleButtonClick('UpdateProductType')}
-            className={activeComponent === 'UpdateProductType' ? 'active' : ''}
+            onClick={() => handleButtonClick('UpdateProduct')}
+            className={activeComponent === 'UpdateProduct' ? 'active' : ''}
           >
-            เเก้ไขประเภทสินค้า
+            แก้ไขสินค้า
           </button>
           <button
             onClick={() => handleButtonClick('OtherComponent')}
@@ -68,16 +66,16 @@ function Product() {
             OtherComponent
           </button>
           <button
-            onClick={() => handleButtonClick('InsertProductType')}
-            className={activeComponent === 'InsertProductType' ? 'active' : ''}
+            onClick={() => handleButtonClick('InsertProduct')}
+            className={activeComponent === 'InsertProduct' ? 'active' : ''}
           >
-            + เพิ่ม ประเภทสินค้า
+            + เพิ่มสินค้า
           </button>
         </div>
         <div className='datapushpro'>
-          {activeComponent === 'ProductTypeList' && <ProductTypeList storeId={data && data.storeId} onchangeUpdate={onchangeUpdate} />}
-          {activeComponent === 'InsertProductType' && <InsertProductType storeId={data && data.storeId} user_id={user_id} onInsertSuccess={handleInsertPromotionSuccess} />}
-          {activeComponent === 'UpdateProductType' && <UpdateProductType product_type_id={product_type_id} onUpdateSuccess={handleInsertPromotionSuccess} />}
+          {activeComponent === 'ProductList' && <ProductList storeId={data && data.storeId} onchangeUpdate={onchangeUpdate} />}
+          {activeComponent === 'InsertProduct' && <InsertProduct storeId={data && data.storeId} user_id={user_id} onInsertSuccess={handleInsertProductSuccess} />}
+          {activeComponent === 'UpdateProduct' && <UpdateProduct product_id={product_id} onUpdateSuccess={handleInsertProductSuccess} />}
         </div>
       </div>
     </>

@@ -20,8 +20,10 @@ import ProfileUser from './stores/components/ProfileUser';
 import Settings from './stores/pages/Setting';
 import StoreDetail from './stores/pages/StoreDetail';
 import Promotion from './stores/pages/Promotion';
-import ProductType from './stores/pages/ProductType';
 import Product from './stores/pages/Product';
+import ProductType from './stores/pages/ProductType';
+
+
 
 function App() {
   return (
