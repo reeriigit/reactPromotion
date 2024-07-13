@@ -38,15 +38,14 @@
   }
 
   .popup {
-
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: white;
+    background-color: rgb(255, 255, 255);
     border: none;
     padding: 20px;
-    z-index: 1000;
+    z-index: 1;
     width: 400px;
     height: 400px;
     overflow: auto;
@@ -54,8 +53,9 @@
     box-shadow: 1px 2px 5px #000;
   }
   .popup button {
-    position: absolute;
-    bottom: 10px;
+    position: relative;
+    top: 10px;
+    left: 10px;
     width: 90%;
     height: 40px;
     border: none;

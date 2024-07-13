@@ -135,6 +135,8 @@ const InsertPromotion = ({ storeId, user_id, onInsertSuccess }) => {
               <Form.Select name="valuecon_id" value={formData.valuecon_id} onChange={handleChange}>
                 <option value={1}>ชิ้น</option>
                 <option value={2}>แต้ม</option>
+                <option value={3}>บาท</option>
+
               </Form.Select>
             </Form.Group>
           </Col>

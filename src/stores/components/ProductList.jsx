@@ -46,8 +46,10 @@ const ProductList = ({ onchangeUpdate, storeId }) => {
   };
 
   const handleDelete = (productId) => {
-    setSelectedProduct(productId);
+    console.log("list pd delete",productId)
     setDeleteConfirmation(true);
+    setSelectedProduct(productId);
+    
   };
 
   const handleConfirmDelete = () => {

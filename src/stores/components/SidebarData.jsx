@@ -59,11 +59,7 @@ const SidebarData = ({ children }) => {
         name: 'Settings',
         icon: <FaCogs />, // Use the FaCogs icon for settings
       },
-      {
       
-        name: 'Settings',
-        icon: <FaCogs />, // Use the FaCogs icon for settings
-      },
     ];
   
     return (

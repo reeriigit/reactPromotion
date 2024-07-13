@@ -8,12 +8,15 @@ const SetPromotionList = ({ onchangeUpdate, storeId }) => {
   const [deleteConfirmation, setDeleteConfirmation] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(5); // Set number of items per page
+  const [selectedPromotion, setSelectedPromotion] = useState(null);
+  const [showDescriptionPopup, setShowDescriptionPopup] = useState(false);
 
   useEffect(() => {
     const fetchSetPromotions = async () => {
       try {
-        const response = await axios.get(`/set_promotions/${storeId}`);
+        const response = await axios.get(`/set_promotions_join/${storeId}`);
         setSetPromotions(response.data);
+        console.log("join", response.data);
       } catch (error) {
         console.error('Error fetching set promotions:', error);
       }
@@ -58,6 +61,15 @@ const SetPromotionList = ({ onchangeUpdate, storeId }) => {
     setDeleteConfirmation(false);
   };
 
+  const handleReadMore = (promotion) => {
+    setSelectedPromotion(promotion);
+    setShowDescriptionPopup(true);
+  };
+
+  const handleClosePopup = () => {
+    setShowDescriptionPopup(false);
+  };
+
   return (
     <div>
       <h2>Set Promotions List</h2>
@@ -66,9 +78,10 @@ const SetPromotionList = ({ onchangeUpdate, storeId }) => {
           <tr>
             <th>Select</th>
             <th>#</th>
-            <th>Promo ID</th>
+            <th>Promo Name</th>
+            <th>Product Name</th>
             <th>Product ID</th>
-            <th>Store ID</th>
+            <th></th>
             <th>Actions</th>
           </tr>
         </MDBTableHead>
@@ -83,19 +96,48 @@ const SetPromotionList = ({ onchangeUpdate, storeId }) => {
                 />
               </td>
               <td>{index + 1}</td>
-              <td>{promotion.promo_id}</td>
-              <td>{promotion.product_id}</td>
+              <td>{promotion.name}</td>
+              <td>{promotion.promo_name}</td>
               <td>{promotion.storeId}</td>
               <td>
-              <button onClick={() => onchangeUpdate(promotion.set_promotion_id)} className="btn btn-success btndel">
+                <button className='buttondes'  onClick={() => handleReadMore(promotion)} >
+                  อ่าน
+                </button>
+              </td>
+              <td>
+              <button onClick={() => onchangeUpdate(promotion.set_promotion_id)} className="btn btn-success">
                   แก้ไข
-              </button>
+                </button>
               </td>
             </tr>
           ))}
         </MDBTableBody>
       </MDBTable>
-     
+
+      {showDescriptionPopup && selectedPromotion && (
+        <div className="popup">
+          <div className="detail">
+            <p>สินค้า: {selectedPromotion.name}</p>
+            <p>ราคา: {selectedPromotion.price} บาท  </p>
+            <p>ต้นทุ่น: {selectedPromotion.cost_price} บาท  </p>
+            <p>Description: {selectedPromotion.description}</p>
+            <hr></hr>
+            <p>โปรโมชั่น: {selectedPromotion.promo_name}</p>
+            <p>โปรโมชั่น: {selectedPromotion.promo_type_name}</p>
+            <hr></hr>
+            <p>เงือนไข</p>
+            <p>จำนวนที่ต้องซื้อ {selectedPromotion.amountcon} {selectedPromotion.valuecon_name}</p>
+            <p>เริ่ม: {selectedPromotion.startdate} ถึง : {selectedPromotion.enddate}</p>
+            <hr></hr>
+            <p>สิ่งที่ให้กับโปรโมชั่น</p>
+            <p>จำนวนโปรโมชั่นคงเหลือ: {selectedPromotion.amountuse}</p>
+            <p>จำนวนที่ได้: {selectedPromotion.amountgiven} {selectedPromotion.valuegiven_name}</p>
+          </div>
+          <button onClick={handleClosePopup} >
+            ปิด
+          </button>
+        </div>
+      )}
 
       {deleteConfirmation && (
         <div className="delete-confirmation-popup">
@@ -109,10 +151,10 @@ const SetPromotionList = ({ onchangeUpdate, storeId }) => {
         </div>
       )}
 
-      <ul className='pagination'>
+      <ul className="pagination">
         {Array.from({ length: Math.ceil(setPromotions.length / itemsPerPage) }, (_, index) => (
           <li key={index + 1} className={`page-item ${currentPage === index + 1 ? 'active' : ''}`}>
-            <button onClick={() => paginate(index + 1)} className='page-link'>
+            <button onClick={() => paginate(index + 1)} className="page-link">
               {index + 1}
             </button>
           </li>
