@@ -35,8 +35,8 @@ const SidebarData = ({ children }) => {
         icon: <FaUserAlt />,
       },
       {
-        path: '/analytics',
-        name: 'Analytics',
+        path: `/stores/setpromotion/${user_id}`,
+        name: 'SetPromotion',
         icon: <FaRegChartBar />,
       },
       {
@@ -56,6 +56,11 @@ const SidebarData = ({ children }) => {
       },
       {
         path: `/stores/setting/profile/${user_id}`, // Assuming you have a settings page
+        name: 'Settings',
+        icon: <FaCogs />, // Use the FaCogs icon for settings
+      },
+      {
+      
         name: 'Settings',
         icon: <FaCogs />, // Use the FaCogs icon for settings
       },

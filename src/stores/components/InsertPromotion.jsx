@@ -176,16 +176,16 @@ const InsertPromotion = ({ storeId, user_id, onInsertSuccess }) => {
 
       <p className='titlepromotion'>สิ่งที่ให้กับโปรโมชั่น</p>
       <div className='Generalinformation'>
-        <Row>
+      <Row>
           <Col>
             <Form.Group controlId="amountuse">
-              <Form.Label>จำนวน:{formData.promo_type === 1 ? 'โปรโมชั่นส่วนลด' : formData.promo_type === 2 ? 'โปรโมชั่นแบบเเถม' : 'โปรโมชั่นแบบสะสมแต้ม'}</Form.Label>
+              <Form.Label>จำนวน:{formData.promo_type === 1 ? 'ส่วนลด' : formData.promo_type === 2 ? 'แถม' : formData.promo_type === 3 ? 'แต้ม' : ''}</Form.Label>
               <Form.Control type="text" name="amountuse" value={formData.amountuse} onChange={handleChange} />
             </Form.Group>
           </Col>
           <Col>
             <Form.Group controlId="amountgiven">
-              <Form.Label>จำนวน:{formData.promo_type === 1 ? 'ส่วนลด' : formData.promo_type === 2 ? 'เเถม' : 'แต้ม'}</Form.Label>
+              <Form.Label>จำนวน:{formData.promo_type === 1 ? 'ส่วนลด' : formData.promo_type === 2 ? 'แถม' : formData.promo_type === 3 ? 'แต้ม' : ''}</Form.Label>
               <Form.Control type="text" name="amountgiven" value={formData.amountgiven} onChange={handleChange} />
             </Form.Group>
           </Col>
@@ -193,20 +193,20 @@ const InsertPromotion = ({ storeId, user_id, onInsertSuccess }) => {
             <Form.Group controlId="valuegiven_id">
               <Form.Label>ค่าที่ให้:</Form.Label>
               <Form.Select name="valuegiven_id" value={formData.valuegiven_id} onChange={handleChange}>
-                {formData.promo_type === 1 && (
+                {formData.promo_type === '1' && (
                   <>
                     <option value={2}>บาท</option>
                     <option value={3}>%</option>
                   </>
                 )}
-                {formData.promo_type === 2 && (
+                {formData.promo_type === '2' && (
                   <>
                     <option value={1}>ชิ้น</option>
                   </>
                 )}
-                {formData.promo_type === 3 && (
+                {formData.promo_type === '3' && (
                   <>
-                    <option value={4}>เเต้ม</option>
+                    <option value={4}>แต้ม</option>
                   </>
                 )}
               </Form.Select>

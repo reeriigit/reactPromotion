@@ -35,6 +35,7 @@ function Product() {
 
   const onchangeUpdate = (product_id) => {
     setProductId(product_id);
+    console.log("fuck you2 ",product_id);
     setActiveComponent('UpdateProduct');
   };
 
@@ -75,7 +76,7 @@ function Product() {
         <div className='datapushpro'>
           {activeComponent === 'ProductList' && <ProductList storeId={data && data.storeId} onchangeUpdate={onchangeUpdate} />}
           {activeComponent === 'InsertProduct' && <InsertProduct storeId={data && data.storeId} user_id={user_id} onInsertSuccess={handleInsertProductSuccess} />}
-          {activeComponent === 'UpdateProduct' && <UpdateProduct product_id={product_id} onUpdateSuccess={handleInsertProductSuccess} />}
+          {activeComponent === 'UpdateProduct' && <UpdateProduct storeId={data && data.storeId} product_id={product_id} onUpdateSuccess={handleInsertProductSuccess} />}
         </div>
       </div>
     </>

@@ -22,6 +22,7 @@ import StoreDetail from './stores/pages/StoreDetail';
 import Promotion from './stores/pages/Promotion';
 import Product from './stores/pages/Product';
 import ProductType from './stores/pages/ProductType';
+import SetPromotion from './stores/pages/SetPromotion';
 
 
 
@@ -119,6 +120,15 @@ function App() {
             <React.Fragment>
               <SidebarData />
               <Product/>
+            </React.Fragment>
+          }
+        />
+        <Route
+          path="/stores/setpromotion/:user_id"
+          element={
+            <React.Fragment>
+              <SidebarData />
+              <SetPromotion/>
             </React.Fragment>
           }
         />

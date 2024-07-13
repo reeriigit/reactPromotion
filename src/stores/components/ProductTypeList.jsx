@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { MDBTable, MDBTableHead, MDBTableBody } from 'mdb-react-ui-kit';
+import '../css/Page.css'
 
 const ProductTypeList = ({ onchangeUpdate, storeId }) => {
   const [productTypes, setProductTypes] = useState([]);

@@ -7,7 +7,8 @@ const ProductList = ({ onchangeUpdate, storeId }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(5);
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const [showPopup, setShowPopup] = useState(false);
+  const [showImagePopup, setShowImagePopup] = useState(false);
+  const [showDescriptionPopup, setShowDescriptionPopup] = useState(false);
   const [deleteConfirmation, setDeleteConfirmation] = useState(false);
 
   useEffect(() => {
@@ -31,11 +32,17 @@ const ProductList = ({ onchangeUpdate, storeId }) => {
 
   const handleReadMore = (product) => {
     setSelectedProduct(product);
-    setShowPopup(true);
+    setShowDescriptionPopup(true);
+  };
+
+  const handleReadImages = (product) => {
+    setSelectedProduct(product);
+    setShowImagePopup(true);
   };
 
   const handleClosePopup = () => {
-    setShowPopup(false);
+    setShowImagePopup(false);
+    setShowDescriptionPopup(false);
   };
 
   const handleDelete = (productId) => {
@@ -73,49 +80,61 @@ const ProductList = ({ onchangeUpdate, storeId }) => {
             <th>ชื่อ</th>
             <th>คำอธิบาย</th>
             <th>ราคา</th>
-            <th>จำนวนคงเหลือ</th>
+            <th>ราคาต้นทุน</th>
             <th>Action</th>
           </tr>
         </MDBTableHead>
         <MDBTableBody>
-          {currentItems.map((product) => (
-            <tr key={product.product_id}>
-              <td>{product.product_id}</td>
-              <td>
-                <img
-                  src={`/productimages/${product.images}`}
-                  alt=''
-                  style={{ borderRadius: '10px', width: '70px', height: '70px' }}
-                  className='rounded'
-                />
-              </td>
-              <td>{product.storeId}</td>
-              <td>{product.name}</td>
-              <td>
-                <button className='buttondes' onClick={() => handleReadMore(product)}>
-                  อ่าน
-                </button>
-                {selectedProduct === product && showPopup && (
-                  <div className='popup'>
-                    <div className='detail'>
-                      <p>Description: {product.description}</p>
+          {currentItems.map((product) => {
+            let images = [];
+            try {
+              images = JSON.parse(product.images);
+            } catch (e) {
+              console.error('Error parsing images:', e);
+            }
+
+            return (
+              <tr key={product.product_id}>
+                <td>{product.product_id}</td>
+                <td>
+                  {images.length > 0 && (
+                    <img
+                      src={`/productimages/${images[0]}`}
+                      alt=''
+                      style={{ borderRadius: '10px', width: '70px', height: '70px', cursor: 'pointer' }}
+                      className='rounded'
+                      onClick={() => handleReadImages(product)}
+                    />
+                  )}
+                </td>
+                <td>{product.storeId}</td>
+                <td>{product.name}</td>
+                <td>
+                  <button className='buttondes' onClick={() => handleReadMore(product)}>
+                    อ่าน
+                  </button>
+                  {selectedProduct === product && showDescriptionPopup && (
+                    <div className='popup'>
+                      <div className='detail'>
+                        <p>Description: {product.description}</p>
+                      </div>
+                      <button onClick={handleClosePopup}>ปิด</button>
                     </div>
-                    <button onClick={handleClosePopup}>ปิด</button>
-                  </div>
-                )}
-              </td>
-              <td>{product.price}</td>
-              <td>{product.quantity_in_stock}</td>
-              <td>
-                <button onClick={() => onchangeUpdate(product.product_id)} className='btn btn-success btndel'>
-                  แก้ไข
-                </button>
-                <button onClick={() => handleDelete(product.product_id)} className='btn btn-danger btndel'>
-                  ลบ
-                </button>
-              </td>
-            </tr>
-          ))}
+                  )}
+                </td>
+                <td>{product.price}</td>
+                <td>{product.cost_price}</td>
+                <td>
+                  <button onClick={() => onchangeUpdate(product.product_id)} className='btn btn-success btndel'>
+                    แก้ไข
+                  </button>
+                  <button onClick={() => handleDelete(product.product_id)} className='btn btn-danger btndel'>
+                    ลบ
+                  </button>
+                </td>
+              </tr>
+            );
+          })}
         </MDBTableBody>
       </MDBTable>
 
@@ -128,6 +147,37 @@ const ProductList = ({ onchangeUpdate, storeId }) => {
           <button onClick={handleCancelDelete} className='btn btn-secondary'>
             ยกเลิก
           </button>
+        </div>
+      )}
+
+      {showImagePopup && selectedProduct && (
+        <div className='image-popup'>
+          <div className='popup-content'>
+            {JSON.parse(selectedProduct.images).map((image, index) => (
+              <img
+                key={index}
+                src={`/productimages/${image}`}
+                alt=''
+                style={{ width: '100%', height: 'auto', marginBottom: '10px' }}
+              />
+            ))}
+            <button onClick={handleClosePopup} className='btn btn-secondary'>
+              ปิด
+            </button>
+          </div>
+        </div>
+      )}
+
+      {showDescriptionPopup && selectedProduct && (
+        <div className='description-popup'>
+          <div className='popup-content'>
+            <div className='detail'>
+              <p>Description: {selectedProduct.description}</p>
+            </div>
+            <button onClick={handleClosePopup} className='btn btn-secondary'>
+              ปิด
+            </button>
+          </div>
         </div>
       )}
 

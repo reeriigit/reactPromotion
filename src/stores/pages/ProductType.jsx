@@ -77,7 +77,7 @@ function ProductType() {
         <div className='datapushpro'>
           {activeComponent === 'ProductTypeList' && <ProductTypeList storeId={data && data.storeId} onchangeUpdate={onchangeUpdate} />}
           {activeComponent === 'InsertProductType' && <InsertProductType storeId={data && data.storeId} user_id={user_id} onInsertSuccess={handleInsertPromotionSuccess} />}
-          {activeComponent === 'UpdateProductType' && <UpdateProductType product_type_id={product_type_id} onUpdateSuccess={handleInsertPromotionSuccess} />}
+          {activeComponent === 'UpdateProductType' && <UpdateProductType  product_type_id={product_type_id} onUpdateSuccess={handleInsertPromotionSuccess} />}
         </div>
       </div>
     </>

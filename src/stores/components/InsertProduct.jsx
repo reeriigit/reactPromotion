@@ -8,15 +8,13 @@ const InsertProduct = ({ storeId, onInsertSuccess }) => {
     name: '',
     description: '',
     price: '',
-    quantity_in_stock: '0',
+    cost_price: '0',
     status_id: '1',
-    promo_id: '',
     product_type_id: '',
     images: [],
   });
 
   const [productTypes, setProductTypes] = useState([]);
-  const [promotions, setPromotions] = useState([]);
   const [statuses, setStatuses] = useState([]);
 
   // Fetch product types based on storeId
@@ -34,18 +32,7 @@ const InsertProduct = ({ storeId, onInsertSuccess }) => {
   }, [storeId]);
 
   // Fetch promotions based on storeId
-  useEffect(() => {
-    const fetchPromotions = async () => {
-      try {
-        const response = await axios.get(`/promotions/${storeId}`);
-        setPromotions(response.data);
-      } catch (error) {
-        console.error('Error fetching promotions:', error);
-      }
-    };
 
-    fetchPromotions();
-  }, [storeId]);
 
   // Fetch statuses
   useEffect(() => {
@@ -154,9 +141,9 @@ const InsertProduct = ({ storeId, onInsertSuccess }) => {
           </Form.Group>
         </Col>
         <Col>
-          <Form.Group controlId='quantity_in_stock'>
+          <Form.Group controlId='cost_price'>
             <Form.Label>จำนวนในสต็อก:</Form.Label>
-            <Form.Control type='text' name='quantity_in_stock' value={formData.quantity_in_stock} onChange={handleChange} />
+            <Form.Control type='text' name='cost_price' value={formData.cost_price} onChange={handleChange} />
           </Form.Group>
         </Col>
       </Row>
@@ -171,26 +158,6 @@ const InsertProduct = ({ storeId, onInsertSuccess }) => {
                   {status.name} {status.status_id}
                 </option>
               ))}
-            </Form.Select>
-          </Form.Group>
-        </Col>
-      </Row>
-
-      <Row>
-        <Col>
-          <Form.Group controlId='promo_id'>
-            <Form.Label>โปรโมชั่น:</Form.Label>
-            <Form.Select name='promo_id' value={formData.promo_id} onChange={handleChange}>
-              <>
-              <option>จำเป็น</option>
-              {promotions.map((promo) => (
-                <option key={promo.promo_id} value={promo.promo_id}>
-                  {promo.promo_name} {promo.promo_id}
-                </option>
-          
-                
-              ))}
-              </>
             </Form.Select>
           </Form.Group>
         </Col>

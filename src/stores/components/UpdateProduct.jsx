@@ -1,5 +1,3 @@
-// UpdateProduct.jsx
-
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Form, Button, Row, Col } from 'react-bootstrap';
@@ -11,121 +9,143 @@ const UpdateProduct = ({ storeId, onUpdateSuccess, product_id }) => {
     name: '',
     description: '',
     price: '',
-    quantity_in_stock: '',
-    status_id: '',
-    promo_id: '',
+    cost_price: '0',
+    status_id: '1',
     product_type_id: '',
     images: [],
   });
 
-  const [imageFiles, setImageFiles] = useState([]);
+  const [productTypes, setProductTypes] = useState([]);
+  const [statuses, setStatuses] = useState([]);
+  const [productImageFiles, setProductImageFiles] = useState([]);
+  const [existingImages, setExistingImages] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`/get_product/${product_id}`);
-        setData(response.data[0]);
-        console.log("Existing product data:", response.data[0]);
+        console.log("roool fuck ", `${product_id}`)
+        const productResponse = await axios.get(`/get_product/${product_id}`);
+        const productData = productResponse.data[0];
+        setData((prevData) => ({
+          ...prevData,
+          ...productData,
+        }));
+        setExistingImages(JSON.parse(productData.images || '[]'));
+
+        const productTypeResponse = await axios.get(`/producttype/${storeId}`);
+        setProductTypes(productTypeResponse.data);
+        console.log("hello",productTypeResponse.data)
+
+        const statusResponse = await axios.get('/statuses');
+        setStatuses(statusResponse.data);
+
+        console.log('Existing product data:', productData);
       } catch (error) {
-        console.error('Error fetching product:', error);
+        console.error('Error fetching data:', error);
       }
     };
 
     fetchData();
-  }, [product_id]);
+  }, [product_id, storeId]);
 
-  const handleImageChange = (e) => {
-    setImageFiles(Array.from(e.target.files));
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setData({
+      ...data,
+      [name]: value,
+    });
   };
 
-  const handleSubmit = (e) => {
+  const handleImageChange = (e) => {
+    setProductImageFiles(Array.from(e.target.files));
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const formData = new FormData();
-    imageFiles.forEach((file) => {
-      formData.append('images', file);
+    const formDataToSend = new FormData();
+    productImageFiles.forEach((image) => {
+      formDataToSend.append('images', image);
     });
 
     Object.entries(data).forEach(([key, value]) => {
-      formData.append(key, value);
+      formDataToSend.append(key, value);
     });
 
-    axios.put(`/updateProduct/${product_id}`, formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-    })
-      .then((res) => {
-        console.log(res);
-        if (onUpdateSuccess) {
-          onUpdateSuccess();
-        }
-      })
-      .catch((err) => {
-        console.log("Error:", err);
-        alert('Error updating product. Please check the console for more details.');
+    console.log('Data to be sent:', formDataToSend);
+
+    try {
+      const response = await axios.put(`/updateProduct/${product_id}`, formDataToSend, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
       });
+
+      console.log(response);
+      if (onUpdateSuccess) {
+        onUpdateSuccess();
+      }
+    } catch (error) {
+      console.error('Error updating product:', error);
+      alert('Error updating product. Please check the console for more details.');
+    }
   };
 
-  // Add conditional rendering
   if (!data) {
     return <p>Loading...</p>;
   }
 
   return (
     <Form onSubmit={handleSubmit}>
-      <Form.Group controlId="images">
-        <Form.Label>รูป:</Form.Label>
-        <Form.Control
-          type="file"
-          name="images"
-          multiple
-          onChange={handleImageChange}
-        />
-
-        {imageFiles.length > 0 ? (
+      <Form.Group controlId='images'>
+        <Form.Label>Product Images:</Form.Label>
+        <Form.Control type='file' name='images' multiple onChange={handleImageChange} />
+        {existingImages.length > 0 && (
           <div style={{ marginTop: '10px' }}>
-            {imageFiles.map((file, index) => (
+            {existingImages.map((image, index) => (
               <img
                 key={index}
-                src={URL.createObjectURL(file)}
-                alt="Preview"
+                src={`/productimages/${image}`}
+                alt='Existing'
                 style={{ maxWidth: '100px', maxHeight: '100px', margin: '10px' }}
               />
             ))}
           </div>
-        ) : (
-          data.images.map((image, index) => (
-            <img
-              key={index}
-              src={`/productimages/${image}`}
-              alt="Preview"
-              style={{ maxWidth: '100px', maxHeight: '100px', marginTop: '10px' }}
-            />
-          ))
+        )}
+        {productImageFiles.length > 0 && (
+          <div style={{ marginTop: '10px' }}>
+            {productImageFiles.map((image, index) => (
+              <img
+                key={index}
+                src={URL.createObjectURL(image)}
+                alt='Preview'
+                style={{ maxWidth: '100px', maxHeight: '100px', margin: '10px' }}
+              />
+            ))}
+          </div>
         )}
       </Form.Group>
 
       <Row>
         <Col>
-          <Form.Group controlId="name">
-            <Form.Label>ชื่อสินค้า:</Form.Label>
+          <Form.Group controlId='name'>
+            <Form.Label>Product Nameb: storeId{storeId}</Form.Label>
             <Form.Control
+              type='text'
+              name='name'
               value={data.name || ''}
-              type="text"
-              name="name"
-              onChange={(e) => setData({ ...data, name: e.target.value })}
+              onChange={handleChange}
             />
           </Form.Group>
         </Col>
         <Col>
-          <Form.Group controlId="description">
-            <Form.Label>คำอธิบายสินค้า:</Form.Label>
+          <Form.Group controlId='description'>
+            <Form.Label>Description:</Form.Label>
             <Form.Control
+              type='text'
+              name='description'
               value={data.description || ''}
-              type="text"
-              name="description"
-              onChange={(e) => setData({ ...data, description: e.target.value })}
+              onChange={handleChange}
             />
           </Form.Group>
         </Col>
@@ -133,24 +153,24 @@ const UpdateProduct = ({ storeId, onUpdateSuccess, product_id }) => {
 
       <Row>
         <Col>
-          <Form.Group controlId="price">
-            <Form.Label>ราคา:</Form.Label>
+          <Form.Group controlId='price'>
+            <Form.Label>Price:</Form.Label>
             <Form.Control
+              type='text'
+              name='price'
               value={data.price || ''}
-              type="text"
-              name="price"
-              onChange={(e) => setData({ ...data, price: e.target.value })}
+              onChange={handleChange}
             />
           </Form.Group>
         </Col>
         <Col>
-          <Form.Group controlId="quantity_in_stock">
-            <Form.Label>จำนวนในสต็อก:</Form.Label>
+          <Form.Group controlId='cost_price'>
+            <Form.Label>Cost Price:</Form.Label>
             <Form.Control
-              value={data.quantity_in_stock || ''}
-              type="text"
-              name="quantity_in_stock"
-              onChange={(e) => setData({ ...data, quantity_in_stock: e.target.value })}
+              type='text'
+              name='cost_price'
+              value={data.cost_price || ''}
+              onChange={handleChange}
             />
           </Form.Group>
         </Col>
@@ -158,41 +178,41 @@ const UpdateProduct = ({ storeId, onUpdateSuccess, product_id }) => {
 
       <Row>
         <Col>
-          <Form.Group controlId="status_id">
-            <Form.Label>สถานะ:</Form.Label>
-            <Form.Control
+          <Form.Group controlId='status_id'>
+            <Form.Label>Status:</Form.Label>
+            <Form.Select
+              name='status_id'
               value={data.status_id || ''}
-              type="text"
-              name="status_id"
-              onChange={(e) => setData({ ...data, status_id: e.target.value })}
-            />
-          </Form.Group>
-        </Col>
-        <Col>
-          <Form.Group controlId="promo_id">
-            <Form.Label>โปรโมชั่น:</Form.Label>
-            <Form.Control
-              value={data.promo_id || ''}
-              type="text"
-              name="promo_id"
-              onChange={(e) => setData({ ...data, promo_id: e.target.value })}
-            />
+              onChange={handleChange}
+            >
+              {statuses.map((status) => (
+                <option key={status.status_id} value={status.status_id}>
+                  {status.name}
+                </option>
+              ))}
+            </Form.Select>
           </Form.Group>
         </Col>
       </Row>
 
-      <Form.Group controlId="product_type_id">
-        <Form.Label>ประเภทสินค้า:</Form.Label>
-        <Form.Control
+      <Form.Group controlId='product_type_id'>
+        <Form.Label>Product Type:</Form.Label>
+        <Form.Select
+          name='product_type_id'
           value={data.product_type_id || ''}
-          type="text"
-          name="product_type_id"
-          onChange={(e) => setData({ ...data, product_type_id: e.target.value })}
-        />
+          onChange={handleChange}
+        >
+          <option>Select Product Type</option>
+          {productTypes.map((type) => (
+            <option key={type.product_type_id} value={type.product_type_id}>
+              {type.product_type_name}
+            </option>
+          ))}
+        </Form.Select>
       </Form.Group>
 
-      <Button variant="primary" type="submit">
-        บันทึก
+      <Button variant='primary' type='submit'>
+        Submit
       </Button>
     </Form>
   );
