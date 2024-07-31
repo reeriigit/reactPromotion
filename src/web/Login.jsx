@@ -40,7 +40,7 @@ const Login = () => {
             navigate(`/admin/${user_id}`);
           }
           if (user_type===2) {
-            navigate(`/web/${user_id}`);
+            navigate(`/${user_id}`);
           }
           if (user_type===3) {
             navigate(`/stores/alertstatus/${user_id}`);

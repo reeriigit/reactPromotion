@@ -1,6 +1,7 @@
 // SetPromotion.jsx
 
 import '../css/Promotion.css';
+import '../css/SetPromotion.css';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
@@ -41,7 +42,7 @@ function SetPromotion() {
 
   return (
     <>
-      <div className="bgpro">
+      <div className="bgpro insertform">
         <div className='barsearch'>
           <MDBCol md="6">
             <input className="form-control" type="text" placeholder="Search" aria-label="Search" />

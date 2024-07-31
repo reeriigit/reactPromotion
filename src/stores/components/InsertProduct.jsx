@@ -142,7 +142,7 @@ const InsertProduct = ({ storeId, onInsertSuccess }) => {
         </Col>
         <Col>
           <Form.Group controlId='cost_price'>
-            <Form.Label>จำนวนในสต็อก:</Form.Label>
+            <Form.Label>ราคาต้นทุ่น:</Form.Label>
             <Form.Control type='text' name='cost_price' value={formData.cost_price} onChange={handleChange} />
           </Form.Group>
         </Col>

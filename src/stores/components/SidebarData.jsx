@@ -23,9 +23,15 @@ const SidebarData = ({ children }) => {
     const toggle = () => setIsOpen(!isOpen);
   
     const menuItem = [
+      
       {
         path: `/stores/dashboard/${user_id}`,
         name: 'Dashboard',
+        icon: <FaTh />,
+      },
+      {
+        path: `/stores/Listoforderers/${user_id}`,
+        name: 'Listoforderers',
         icon: <FaTh />,
       },
       

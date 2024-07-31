@@ -1,0 +1,23 @@
+.Todolist{
+    width: 100%;
+    width: 100%;
+    padding: 0px 200px  0px 200px;
+    
+}
+.Todolist .container{
+    box-shadow: 1px 2px 5px #646464;
+    height: 600px;
+    position: relative;
+    overflow-y: scroll;
+}
+.Todolist .menuselect{
+    display: flex;
+    justify-content: center;
+    border: 1px solid #646464;
+}
+.Todolist .menuselect button{
+    border: none;
+    box-shadow: 1px 2px 5px #646464;
+    border-radius: 5px;
+    padding: 5px;
+}

@@ -1,7 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Home from './elements/Home';
 import Create from './elements/Create';
 import Edit from './elements/Edit';
 import Read from './elements/Read';
@@ -23,15 +22,22 @@ import Promotion from './stores/pages/Promotion';
 import Product from './stores/pages/Product';
 import ProductType from './stores/pages/ProductType';
 import SetPromotion from './stores/pages/SetPromotion';
+import Index from './web/Index';
+import Todolist from './web/pages/Todolist';
+import Listoforderers from './stores/pages/Listoforderers';
+
+
 
 
 
 function App() {
+    
   return (
     <Router>
       <Routes>
         <Route path="/web/login" element={<Login />} />
-        <Route path='/' element={<Home />} />
+        <Route path="/" element={<Index />} />
+
         <Route path='/create' element={<Create />} />
         <Route path='/edit/:storeId' element={<Edit />} />
         <Route path='/read/:storeId' element={<Read />} />
@@ -132,6 +138,31 @@ function App() {
             </React.Fragment>
           }
         />
+        <Route
+          path="/stores/Listoforderers/:user_id"
+          element={
+            <React.Fragment>
+              <SidebarData />
+              <Listoforderers/>
+            </React.Fragment>
+          }
+        />
+
+        <Route
+        path="/:user_id"
+        element={
+          <React.Fragment>
+            <Index />
+          </React.Fragment>
+        }
+      />
+      <Route
+        path="/web/todolist"
+        element={
+          <React.Fragment>
+            <Todolist />
+          </React.Fragment>}
+      />
       </Routes>
     </Router>
   );

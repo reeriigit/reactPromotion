@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { MDBTable, MDBTableHead, MDBTableBody } from 'mdb-react-ui-kit';
+import '../css/SetPromotion.css';
 
 const SetPromotionList = ({ onchangeUpdate, storeId }) => {
   const [setPromotions, setSetPromotions] = useState([]);
   const [selectedPromotions, setSelectedPromotions] = useState([]);
   const [deleteConfirmation, setDeleteConfirmation] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(5); // Set number of items per page
+  const [itemsPerPage] = useState(5);
   const [selectedPromotion, setSelectedPromotion] = useState(null);
   const [showDescriptionPopup, setShowDescriptionPopup] = useState(false);
 
@@ -25,7 +26,6 @@ const SetPromotionList = ({ onchangeUpdate, storeId }) => {
     fetchSetPromotions();
   }, [storeId]);
 
-  // Pagination logic
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = setPromotions.slice(indexOfFirstItem, indexOfLastItem);
@@ -78,6 +78,7 @@ const SetPromotionList = ({ onchangeUpdate, storeId }) => {
           <tr>
             <th>Select</th>
             <th>#</th>
+            <th>Image</th>
             <th>Promo Name</th>
             <th>Product Name</th>
             <th>Product ID</th>
@@ -86,31 +87,50 @@ const SetPromotionList = ({ onchangeUpdate, storeId }) => {
           </tr>
         </MDBTableHead>
         <MDBTableBody>
-          {currentItems.map((promotion, index) => (
-            <tr key={promotion.set_promotion_id}>
-              <td>
-                <input
-                  type="checkbox"
-                  checked={selectedPromotions.includes(promotion.set_promotion_id)}
-                  onChange={() => handleCheckboxChange(promotion.set_promotion_id)}
-                />
-              </td>
-              <td>{index + 1}</td>
-              <td>{promotion.name}</td>
-              <td>{promotion.promo_name}</td>
-              <td>{promotion.storeId}</td>
-              <td>
-                <button className='buttondes'  onClick={() => handleReadMore(promotion)} >
-                  อ่าน
-                </button>
-              </td>
-              <td>
-              <button onClick={() => onchangeUpdate(promotion.set_promotion_id)} className="btn btn-success">
-                  แก้ไข
-                </button>
-              </td>
-            </tr>
-          ))}
+          {currentItems.map((promotion, index) => {
+            let images = [];
+            try {
+              images = JSON.parse(promotion.images);
+            } catch (e) {
+              console.error('Error parsing images:', e);
+            }
+
+            return (
+              <tr key={promotion.set_promotion_id}>
+                <td>
+                  <input
+                    type="checkbox"
+                    checked={selectedPromotions.includes(promotion.set_promotion_id)}
+                    onChange={() => handleCheckboxChange(promotion.set_promotion_id)}
+                  />
+                </td>
+                <td>{index + 1}</td>
+                <td>
+                  {images.length > 0 && (
+                    <img
+                      src={`/productimages/${images[0]}`}
+                      alt={promotion.name}
+                      style={{ borderRadius: '10px', width: '70px', height: '70px', cursor: 'pointer' }}
+                      className='rounded'
+                    />
+                  )}
+                </td>
+                <td>{promotion.promo_name}</td>
+                <td>{promotion.name}</td>
+                <td>{promotion.storeId}</td>
+                <td>
+                  <button className='buttondes' onClick={() => handleReadMore(promotion)}>
+                    อ่าน
+                  </button>
+                </td>
+                <td>
+                  <button onClick={() => onchangeUpdate(promotion.set_promotion_id)} className="btn btn-success">
+                    แก้ไข
+                  </button>
+                </td>
+              </tr>
+            );
+          })}
         </MDBTableBody>
       </MDBTable>
 
@@ -118,22 +138,22 @@ const SetPromotionList = ({ onchangeUpdate, storeId }) => {
         <div className="popup">
           <div className="detail">
             <p>สินค้า: {selectedPromotion.name}</p>
-            <p>ราคา: {selectedPromotion.price} บาท  </p>
-            <p>ต้นทุ่น: {selectedPromotion.cost_price} บาท  </p>
+            <p>ราคา: {selectedPromotion.price} บาท</p>
+            <p>ต้นทุ่น: {selectedPromotion.cost_price} บาท</p>
             <p>Description: {selectedPromotion.description}</p>
-            <hr></hr>
+            <hr />
             <p>โปรโมชั่น: {selectedPromotion.promo_name}</p>
             <p>โปรโมชั่น: {selectedPromotion.promo_type_name}</p>
-            <hr></hr>
-            <p>เงือนไข</p>
+            <hr />
+            <p>เงื่อนไข</p>
             <p>จำนวนที่ต้องซื้อ {selectedPromotion.amountcon} {selectedPromotion.valuecon_name}</p>
             <p>เริ่ม: {selectedPromotion.startdate} ถึง : {selectedPromotion.enddate}</p>
-            <hr></hr>
+            <hr />
             <p>สิ่งที่ให้กับโปรโมชั่น</p>
             <p>จำนวนโปรโมชั่นคงเหลือ: {selectedPromotion.amountuse}</p>
             <p>จำนวนที่ได้: {selectedPromotion.amountgiven} {selectedPromotion.valuegiven_name}</p>
           </div>
-          <button onClick={handleClosePopup} >
+          <button onClick={handleClosePopup}>
             ปิด
           </button>
         </div>

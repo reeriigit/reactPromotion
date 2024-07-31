@@ -1,0 +1,173 @@
+
+.showproduct-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
+    padding: 0px;
+    margin-top: 50px;
+    /* border: 1px solid #000; */
+  }
+  
+  .product-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    text-align: center;
+    height: auto;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .product-card img {
+    width: 100%;
+    height: 200px;
+  }
+  
+  .product-card h3 {
+    margin: 10px 0;
+    font-size: 1.2em;
+  }
+  
+  .product-card p {
+    padding: 0 10px 10px;
+    color: #666;
+  }
+  .product-card:hover{
+    scale: 1.1;
+    transition: .5s;
+    
+  }
+
+  .Showforyou .popup {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .popup > .item{
+    width: 40%;
+    background-color: #fff;
+    height: 500px;
+  }
+  
+  .Showforyou .popup-content {
+    position: relative;
+    padding: 20px;
+    border-radius: 10px 0px 0px 10px ;
+    text-align: center;
+    overflow: hidden;
+  }
+  .Showforyou .detailpro{
+    position: relative;
+    border-radius: 0px 10px 10px 0px;
+    padding: 35px 10px 10px 10px;
+  }
+  .Showforyou .detailpro .close{
+    position: absolute;
+    scale: 0.7;
+    right: 0px;
+    top: 0px;
+    padding: 2px;
+    width: auto;
+    height: auto;
+    font-size: 25px;
+    box-shadow: 1px 2px 5px #a4a4a4;
+    border-radius: 10px;
+
+  }
+  .Showforyou .detailpro .close:hover{
+    background: rgb(255, 121, 121);
+    transition: .5s;
+  }
+
+  .Showforyou .popup-content .action{
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    gap: 15px;
+  }
+  .Showforyou .popup-content .action button{
+    width: 45%;
+    height: 40px;
+    box-shadow: 1px 2px 5px #cfcfcf;
+    margin: 0px;
+    font-weight: 900;
+   
+  }
+  .Showforyou .popup-content .action .cart{
+    background: white;
+    color: #666;
+  }
+
+  .Showforyou .popup-content .action .buy{
+    background: rgb(255, 207, 64);
+    color: #ffffff;
+  }
+  
+  /* .Showforyou .DetailSetpro .close {
+    background: rgb(255, 255, 255);
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    cursor: pointer;
+  } */
+
+  .Showforyou .popup-content .datapro{
+    padding-top: 10px;
+    display: flex;
+ 
+  }
+  .Showforyou .popup-content .datapro .item{
+    width: 50%;
+    
+    
+  }
+  .Showforyou .popup-content .datapro .item .price{
+    color: orange;
+    font-size: 25px;
+    font-weight: 900;
+    
+  }
+  .Showforyou .popup-content .datapro .item:first-child{
+
+    text-align: left;
+    
+    
+  }
+  .Showforyou .popup-content .datapro .item:last-child{
+    text-align: right;
+    
+    
+  }
+
+  .Showforyou .popup-content .gridlayer{
+    display: flex;
+
+  }
+  .Showforyou .popup-content .gridlayer > img {
+    width: 50%;
+    height: 230px;
+  }
+
+  .Showforyou .popup-content .gridlayer  .img-item{
+
+    height: 230px;
+   
+    
+  }
+  .Showforyou .popup-content .gridlayer  .img-item img{
+    width: 100%;
+    height: 110px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    margin-right: 5px;
+  }
+

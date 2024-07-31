@@ -109,7 +109,7 @@ const InsertSetPromotion = ({ storeId, onInsertSuccess }) => {
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form className='insertform' onSubmit={handleSubmit}>
       {error && <Alert variant="danger">{error}</Alert>}
       <Row>
         <Col>
@@ -125,7 +125,7 @@ const InsertSetPromotion = ({ storeId, onInsertSuccess }) => {
               
             </div>
             {showPromotionSelection && (
-              <div style={{ maxHeight: '200px', overflowY: 'scroll' }}>
+              <div className='selectPromotoin' style={{ maxHeight: '200px', overflowY: 'scroll' }}>
                 {promotions.map((promo) => (
                   <Form.Check
                     key={promo.promo_id}

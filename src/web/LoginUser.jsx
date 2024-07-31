@@ -9,7 +9,7 @@ const LoginUser = () => {
           <h3>LoginUser</h3>
           <form>
             <div className="form-group">
-              <label htmlFor="username">Username</label>
+              <label htmlFor="username">ชื่อผู้ใช้</label>
               <input
                 type="text"
                 name="username"
