@@ -1,20 +1,88 @@
 .Order{
     position: relative;
     width: 100%;
-    height: 100%;
+    height: auto;
+    padding-bottom: 100px;
 }
 .Order > div{
-    border-bottom: 2px solid #8d8d8d;
+    border-bottom: 2px solid #b9b9b9;
     padding: 10px;
 }
 .Order > .payment{
     border: none;
+    display: flex;
 }
-
+.Order > .payment > div{
+    width: 50%;
+}
+.Order > .payment > .right{
+    text-align: right;
+}
 .Order > .pricelist{
   position: absolute;
-  bottom: 0px;
+  bottom: 10px;
   left: 0px;
   width: 100%;
-  border: none;
+  box-shadow:0px -2px 5px #8d8d8d ;
+
+}
+
+.Order > .pricelist > button{
+    position: absolute;
+    top: 20%;
+    right: 20px;
+    background: rgb(246, 194, 37);
+    border: none;
+    color: white;
+    font-weight: 900;
+    box-shadow: 1px 2px 3px #8d8d8d;
+    border-radius: 3px;
+}
+.Order > .pricelist > .pricsetpro{
+    display: flex;
+}
+.Order > .pricelist > .pricsetpro > p{
+    font-weight: 900;
+    margin-left: 20px;
+}
+.Order > .pricelist > .pricsetpro > p:last-child{
+    color:  rgb(246, 194, 37);
+}
+
+.Order .Orderlist{
+
+    display: flex;
+    position: relative;
+}
+
+.Order .Orderlist > div {
+    margin-right: 100px;  
+}
+.Order .Orderlist > img{
+    margin-right: 20px;  
+}
+
+.Order .Orderlist > .amountControl{
+    position: absolute;
+    right: 0;
+    top: 20px;
+}
+.Order .Orderlist > .amountControl > span,button{
+    padding: 5px 10px 5px 10px;
+    border: none;
+}
+.Order .Orderlist > .amountControl > button{
+    background: #8d8d8d;
+    border-radius: 2px;
+    color: white;
+}
+.Orderlist > div > p:last-child{
+    color:rgb(229, 189, 66);
+    font-weight: 900;
+    
+}
+.Order .showpromotion {
+    display: flex;
+    justify-items: center;
+    
 }

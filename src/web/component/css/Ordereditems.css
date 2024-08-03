@@ -1,0 +1,77 @@
+.Ordereditems {
+    padding: 20px;
+  }
+  
+  .Ordereditems  .minicon{
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    margin-bottom: 10px;
+    padding: 10px;
+    
+  }
+  .Ordereditems  .minicon .status{
+    display: flex;
+    justify-content: space-evenly;
+  }
+  .Ordereditems  .minicon .status > div{
+    text-align: center;
+    position: relative;
+    background: white;
+    width: 50%;
+    border-radius: 20px;
+    margin-left: 10px;
+  }
+  .Ordereditems  .minicon .status > div >p:last-child{
+
+    font-size: 40px;
+    font-weight: 900;
+    position: relative;
+  }
+  .Ordereditems  .minicon .status > .totalprice >p:last-child{
+    color: rgb(255, 83, 83);
+
+  }
+  .Ordereditems  .minicon .status > .countorder >p:last-child{
+    color: orange;
+
+  }
+  .Ordereditems .purchase-order {
+    justify-content: space-between;
+    padding: 5px;
+    display: flex;
+  }
+  .Ordereditems .purchase-order> div{
+    width: 30%;
+    /* border: 1px solid #ddd; */
+
+  }
+  
+  .Ordereditems .order-details {
+    padding: 10px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin: 10px;
+    
+  }
+  
+  .Ordereditems .order-item {
+    margin-bottom: 10px;
+
+  }
+  
+  .Ordereditems button {
+    padding: 10px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 10px;
+  }
+  
+  .Ordereditems button:hover {
+    background-color: #0056b3;
+  }
+  

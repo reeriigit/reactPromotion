@@ -15,6 +15,7 @@ function Listoforderers() {
   const navigate = useNavigate();
   const [data, setStore] = useState(null);
   const [product_id, setProductId] = useState(null);
+  const [searchQuery, setSearchQuery] = useState(''); // สถานะใหม่สำหรับข้อความค้นหา
 
   const handleButtonClick = (component) => {
     setActiveComponent(component);
@@ -39,12 +40,23 @@ function Listoforderers() {
     setActiveComponent('UpdateProduct');
   };
 
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value); // จัดการการเปลี่ยนแปลงของข้อความค้นหา
+  };
+
   return (
     <>
       <div className="bgpro">
         <div className='barsearch'>
           <MDBCol md="6">
-            <input className="form-control" type="text" placeholder="Search" aria-label="Search" />
+            <input 
+              className="form-control" 
+              type="text" 
+              placeholder="Search" 
+              aria-label="Search" 
+              value={searchQuery} // กำหนดค่าของอินพุต
+              onChange={handleSearchChange} // เพิ่มฟังก์ชันจัดการการเปลี่ยนแปลง
+            />
           </MDBCol>
         </div>
         <div className="barbutton">
@@ -74,7 +86,7 @@ function Listoforderers() {
           </button>
         </div>
         <div className='datapushpro'>
-          {activeComponent === 'Orderlist' && <Orderlist storeId={data && data.storeId} onchangeUpdate={onchangeUpdate} />}
+          {activeComponent === 'Orderlist' && <Orderlist storeId={data && data.storeId} searchQuery={searchQuery} onchangeUpdate={onchangeUpdate} />}
           {activeComponent === 'InsertProduct' && <InsertProduct storeId={data && data.storeId} user_id={user_id} onInsertSuccess={handleInsertProductSuccess} />}
           {activeComponent === 'UpdateProduct' && <UpdateProduct storeId={data && data.storeId} product_id={product_id} onUpdateSuccess={handleInsertProductSuccess} />}
         </div>

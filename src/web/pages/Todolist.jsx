@@ -6,9 +6,6 @@ import Popuser from '../component/Popuser';
 import Ordereditems from '../component/Ordereditems';
 
 // Dummy components for demonstration purposes
-
-
-
 const Completion = () => (
   <div>
     <h2>Order Completed</h2>
@@ -22,13 +19,15 @@ function Todolist() {
   console.log("shoooe  ww ", set_promotion_id);
   const [activeComponent, setActiveComponent] = useState('Order');
   const [currentSetPromotionId, setCurrentSetPromotionId] = useState(set_promotion_id);
+  const [puoderStatusId, setPuoderStatusId] = useState(null);
 
   if (!currentSetPromotionId && !storeId) {
     return <div>No product selected.</div>;
   }
 
-  const handleButtonClick = (component) => {
+  const handleButtonClick = (component, statusId = null) => {
     setActiveComponent(component);
+    setPuoderStatusId(statusId);
   };
 
   const saveOder = () => {
@@ -48,7 +47,7 @@ function Todolist() {
           />
         );
       case 'Ordereditems':
-        return <Ordereditems user_id={user_id.user_id} />;
+        return <Ordereditems puoderStatusId={puoderStatusId} user_id={user_id.user_id} />;
       case 'Completion':
         return <Completion />;
       default:
@@ -59,7 +58,6 @@ function Todolist() {
   return (
     <div className='Todolist'>
       <Popuser user_id={user_id.user_id} />
-      <div className="title">Make Order</div>
       <div className="menuselect">
         <button
           onClick={() => handleButtonClick('Order')}
@@ -68,17 +66,24 @@ function Todolist() {
           คำสั่งซื้อ
         </button>
         <button
-          onClick={() => handleButtonClick('Ordereditems')}
-          className={activeComponent === 'Ordereditems' ? 'active' : ''}
+          onClick={() => handleButtonClick('Ordereditems', 1)}
+          className={activeComponent === 'Ordereditems' && puoderStatusId === 1 ? 'active' : ''}
         >
-          รายการที่สั่ง
+          รายการที่สั่ง (รอการชำระ)
         </button>
         <button
-          onClick={() => handleButtonClick('Completion')}
-          className={activeComponent === 'Completion' ? 'active' : ''}
+          onClick={() => handleButtonClick('Ordereditems', 3)}
+          className={activeComponent === 'Ordereditems' && puoderStatusId === 3 ? 'active' : ''}
         >
-          เสร็จสิ้น
+          รายการที่สั่ง (เสร็จสิ้น)
         </button>
+        <button
+          onClick={() => handleButtonClick('Ordereditems', 2)}
+          className={activeComponent === 'Ordereditems' && puoderStatusId === 2 ? 'active' : ''}
+        >
+          ยกเลิก (เสร็จสิ้น)
+        </button>
+     
       </div>
       <div className="container">
         {renderComponent()}

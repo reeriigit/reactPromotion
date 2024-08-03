@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { MDBTable, MDBTableHead, MDBTableBody } from 'mdb-react-ui-kit';
-import '../css/Page.css'
+import '../css/Page.css';
+import MenuDetailManager from './MenuDetailManager';
+import { Modal, ModalBody, ModalHeader } from 'react-bootstrap';
 
 const ProductTypeList = ({ onchangeUpdate, storeId }) => {
   const [productTypes, setProductTypes] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(5);
   const [selectedProductType, setSelectedProductType] = useState(null);
+  const [selectedMenuDetail, setSelectedMenuDetail] = useState(null);
   const [showPopup, setShowPopup] = useState(false);
   const [deleteConfirmation, setDeleteConfirmation] = useState(false);
+  const [showMenuDetailModal, setShowMenuDetailModal] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -33,6 +37,11 @@ const ProductTypeList = ({ onchangeUpdate, storeId }) => {
   const handleReadMore = (productType) => {
     setSelectedProductType(productType);
     setShowPopup(true);
+  };
+
+  const handleMenuDetail = (productType) => {
+    setSelectedMenuDetail(productType);
+    setShowMenuDetailModal(true);
   };
 
   const handleClosePopup = () => {
@@ -62,6 +71,11 @@ const ProductTypeList = ({ onchangeUpdate, storeId }) => {
     setSelectedProductType(null);
   };
 
+  const handleCloseMenuDetailModal = () => {
+    setShowMenuDetailModal(false);
+    setSelectedMenuDetail(null);
+  };
+
   return (
     <div className='containerlist'>
       <h2>รายการประเภทสินค้า</h2>
@@ -72,6 +86,7 @@ const ProductTypeList = ({ onchangeUpdate, storeId }) => {
             <th>รูป</th>
             <th>ID store {storeId}</th>
             <th>ชื่อ</th>
+            <th>เพิ่มข้อมูลย่อย</th>
             <th>คำอธิบาย</th>
             <th>Action</th>
           </tr>
@@ -91,6 +106,11 @@ const ProductTypeList = ({ onchangeUpdate, storeId }) => {
               <td>{productType.storeId}</td>
               <td>{productType.product_type_name}</td>
               <td>
+                <button className='formmenudetail' onClick={() => handleMenuDetail(productType)}>
+                  เพิ่มข้อมูลย่อย
+                </button>
+              </td>
+              <td>
                 <button className='buttondes' onClick={() => handleReadMore(productType)}>
                   อ่าน
                 </button>
@@ -104,7 +124,6 @@ const ProductTypeList = ({ onchangeUpdate, storeId }) => {
                   </div>
                 )}
               </td>
-
               <td>
                 <button onClick={() => onchangeUpdate(productType.product_type_id)} className='btn btn-success btndel'>
                   เเก้ไข
@@ -139,6 +158,17 @@ const ProductTypeList = ({ onchangeUpdate, storeId }) => {
           </li>
         ))}
       </ul>
+
+      {showMenuDetailModal && (
+        <Modal show={showMenuDetailModal} onHide={handleCloseMenuDetailModal}>
+          <ModalHeader closeButton>
+            <Modal.Title>เพิ่มข้อมูลย่อย</Modal.Title>
+          </ModalHeader>
+          <ModalBody>
+            <MenuDetailManager productTypeId={selectedMenuDetail.product_type_id} />
+          </ModalBody>
+        </Modal>
+      )}
     </div>
   );
 };

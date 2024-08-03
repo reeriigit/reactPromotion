@@ -1,47 +1,54 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { MDBTable, MDBTableHead, MDBTableBody } from 'mdb-react-ui-kit';
+import '../css/Orderlist.css'
 
-
-const Orderlist = ({ storeId }) => {
+const Orderlist = ({ storeId, searchQuery }) => {
   const [purchaseOrders, setPurchaseOrders] = useState([]);
   const [orders, setOrders] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(5);
-  const [selectedOrder, setSelectedOrder] = useState(null);
+  const [selectedPurchaseOrderId, setSelectedPurchaseOrderId] = useState(null);
   const [showOrderPopup, setShowOrderPopup] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchPurchaseOrders = async () => {
       try {
-        const response = await axios.get(`/puchaseoder/store/${storeId}`);
+        const query = searchQuery ? `search/${searchQuery}` : '';
+        const response = await axios.get(`/puchaseoder/store/${storeId}/${query}`);
         setPurchaseOrders(response.data);
+        console.log("userorder",response.data)
+        setLoading(false);
       } catch (error) {
-        console.error("Error fetching purchase orders:", error);
+        setError("Error fetching purchase orders.");
+        setLoading(false);
       }
     };
 
     fetchPurchaseOrders();
-  }, [storeId]);
+  }, [storeId, searchQuery]);
 
-  useEffect(() => {
-    const fetchOrdersForPurchaseOrders = async () => {
-      const newOrders = {};
-      for (const po of purchaseOrders) {
-        try {
-          const response = await axios.get(`/orders/puchaseorder/${po.puchaseoder_id}`);
-          newOrders[po.puchaseoder_id] = response.data;
-        } catch (error) {
-          console.error(`Error fetching orders for purchase order ${po.puchaseoder_id}:`, error);
-        }
-      }
-      setOrders(newOrders);
-    };
-
-    if (purchaseOrders.length > 0) {
-      fetchOrdersForPurchaseOrders();
+  const fetchOrdersForPurchaseOrder = async (purchaseOrderId) => {
+    try {
+      const response = await axios.get(`/orders/puchaseorder/${purchaseOrderId}`);
+      setOrders({ [purchaseOrderId]: response.data });
+    } catch (error) {
+      console.error(`Error fetching orders for purchase order ${purchaseOrderId}:`, error);
     }
-  }, [purchaseOrders]);
+  };
+
+  const handleReadMore = (purchaseOrderId) => {
+    setSelectedPurchaseOrderId(purchaseOrderId);
+    fetchOrdersForPurchaseOrder(purchaseOrderId);
+    setShowOrderPopup(true);
+  };
+
+  const handleClosePopup = () => {
+    setShowOrderPopup(false);
+    setSelectedPurchaseOrderId(null);
+  };
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -49,75 +56,112 @@ const Orderlist = ({ storeId }) => {
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-  const handleReadMore = (order) => {
-    setSelectedOrder(order);
-    setShowOrderPopup(true);
-  };
-
-  const handleClosePopup = () => {
-    setShowOrderPopup(false);
-  };
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
-    <div className='containerlist'>
+    <div className='containerorderlist'>
       <h2>Order List for Store {storeId}</h2>
-      <MDBTable>
-        <MDBTableHead>
-          <tr>
-            <th>Purchase Order ID</th>
-            <th>Order ID</th>
-            <th>Product Name</th>
-            <th>Promotion Name</th>
-            <th>Price</th>
-            <th>Actions</th>
-          </tr>
-        </MDBTableHead>
-        <MDBTableBody>
-          {currentItems.map((po) => (
-            orders[po.puchaseoder_id] ? (
-              orders[po.puchaseoder_id].map((order) => (
-                <tr key={order.oder_id}>
+
+      {error && <div>{error}</div>}
+      
+      {purchaseOrders.length === 0 ? (
+        <div>No purchase orders found for this store</div>
+      ) : (
+        <>
+          <MDBTable>
+            <MDBTableHead>
+              <tr>
+                <th>Purchase Order ID</th>
+                <th>User ID</th>
+                <th>Store ID</th>
+                <th>Purchase Order Date</th>
+                <th>Status ID</th>
+                <th>Total Price</th>
+                <th>Actions</th>
+              </tr>
+            </MDBTableHead>
+            <MDBTableBody>
+              {currentItems.map((po) => (
+                <tr key={po.puchaseoder_id}>
                   <td>{po.puchaseoder_id}</td>
-                  <td>{order.oder_id}</td>
-                  <td>{order.name}</td>
-                  <td>{order.promo_name}</td>
-                  <td>{order.price}</td>
+                  <td>{po.username}</td>
+                  <td>{po.storeId}</td>
+                  <td>{po.puchaseoder_date}</td>
+                  {po.puoder_status_id === 1 && (
+                    <td>รอการชำระ</td>
+                  )}
+                  {po.puoder_status_id === 2 && (
+                    <td>ยกเลิก</td>
+                  )}
+                  {po.puoder_status_id === 3 && (
+                    <td>ชำระเเล้ว</td>
+                  )}
+                  
+                  <td>{po.puchaseoder_ttprice}</td>
                   <td>
-                    <button className='btn btn-info' onClick={() => handleReadMore(order)}>Read More</button>
+                    <button className='btn btn-info' onClick={() => handleReadMore(po.puchaseoder_id)}>
+                      Read More
+                    </button>
                   </td>
                 </tr>
-              ))
-            ) : (
-              <tr key={po.puchaseoder_id}>
-                <td colSpan="6">Loading orders for purchase order {po.puchaseoder_id}...</td>
-              </tr>
-            )
-          ))}
-        </MDBTableBody>
-      </MDBTable>
+              ))}
+            </MDBTableBody>
+          </MDBTable>
 
-      {showOrderPopup && selectedOrder && (
-        <div className='popup'>
-          <div className='popup-content'>
-            <h3>Order {selectedOrder.oder_id}</h3>
-            <p>Product Name: {selectedOrder.name}</p>
-            <p>Promotion Name: {selectedOrder.promo_name}</p>
-            <p>Price: {selectedOrder.price}</p>
-            {/* Add more order details here */}
-            <button onClick={handleClosePopup} className='btn btn-secondary'>Close</button>
-          </div>
-        </div>
+          {showOrderPopup && selectedPurchaseOrderId && (
+            <div className='popup'>
+              <div className='popup-content'>
+                <h3>Order Details for Purchase Order {selectedPurchaseOrderId}</h3>
+                {orders[selectedPurchaseOrderId] ? (
+                  <MDBTable>
+                    <MDBTableHead>
+                      <tr>
+                        <th>Order ID</th>
+                        <th>Product Name</th>
+                        <th>Promotion Name</th>
+                        <th>Price</th>
+                        <th>เเบบ</th>
+                      </tr>
+                    </MDBTableHead>
+                    <MDBTableBody>
+                      {orders[selectedPurchaseOrderId].map((order) => (
+                        <tr key={order.oder_id}>
+                          <td>{order.oder_id}</td>
+                          <td>{order.name}</td>
+                          <td>{order.promo_name}</td>
+                          <td>{order.price}</td>
+                          {order.purchasetype_id === 1 && (
+                            <td>กลับบ้าน</td>
+                          )}
+                          {order.purchasetype_id === 2 && (
+                            <td>ที่ร้าน</td>
+                          )}
+                          
+                        </tr>
+                      ))}
+                    </MDBTableBody>
+                  </MDBTable>
+                ) : (
+                  <div>Loading order details...</div>
+                )}
+                <button onClick={handleClosePopup} className='btn btn-secondary'>Close</button>
+              </div>
+            </div>
+          )}
+
+          <ul className='pagination'>
+            {Array.from({ length: Math.ceil(purchaseOrders.length / itemsPerPage) }, (_, index) => (
+              <li key={index + 1} className={`page-item ${currentPage === index + 1 ? 'active' : ''}`}>
+                <button onClick={() => paginate(index + 1)} className='page-link'>
+                  {index + 1}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </>
       )}
-
-      <ul className='pagination'>
-        {Array.from({ length: Math.ceil(purchaseOrders.length / itemsPerPage) }, (_, index) => (
-          <li key={index + 1} className={`page-item ${currentPage === index + 1 ? 'active' : ''}`}>
-            <button onClick={() => paginate(index + 1)} className='page-link'>
-              {index + 1}
-            </button>
-          </li>
-        ))}
-      </ul>
     </div>
   );
 };

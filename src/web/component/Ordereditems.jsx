@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './css/Popuser.css';
+import './css/Ordereditems.css'
+import { MDBTable, MDBTableBody } from 'mdb-react-ui-kit';
 
-function Ordereditems({ user_id }) {
+function Ordereditems({ user_id, puoderStatusId }) {
   const [purchaseOrders, setPurchaseOrders] = useState([]);
   const [orders, setOrders] = useState({});
+  const [expandedOrder, setExpandedOrder] = useState(null);
 
   useEffect(() => {
-    // Fetch purchase orders for the user
+    // Fetch purchase orders for the user with the given status
     const fetchPurchaseOrders = async () => {
       try {
-        const response = await axios.get(`/puchaseoder/user/${user_id}`);
+        const response = await axios.get(`/puchaseoder/user/${user_id}/status/${puoderStatusId}`);
         setPurchaseOrders(response.data);
       } catch (error) {
         console.error("Error fetching purchase orders:", error);
@@ -18,7 +20,7 @@ function Ordereditems({ user_id }) {
     };
 
     fetchPurchaseOrders();
-  }, [user_id]);
+  }, [user_id, puoderStatusId]);
 
   useEffect(() => {
     // Fetch orders for each purchase order
@@ -40,30 +42,77 @@ function Ordereditems({ user_id }) {
     }
   }, [purchaseOrders]);
 
+  const handleExpandClick = (puchaseoder_id) => {
+    setExpandedOrder(expandedOrder === puchaseoder_id ? null : puchaseoder_id);
+  };
+
   return (
     <div className="Ordereditems">
-      <button>{user_id}</button>
+      <h3>รายการ</h3>
       {purchaseOrders.length > 0 ? (
         purchaseOrders.map((po) => (
-          <div key={po.puchaseoder_id}>
-            <h3>Purchase Order {po.puchaseoder_id}</h3>
-            {orders[po.puchaseoder_id] ? (
-              orders[po.puchaseoder_id].map((order) => (
-                <div key={order.oder_id}>
-                  <p>Order {order.oder_id}</p>
-                  <p>Product Name: {order.name}</p>
-                  <p>Promotion Name: {order.promo_name}</p>
-                  <p>Price: {order.price}</p>
-                  {/* Add more order details here */}
+          <div key={po.puchaseoder_id} className="minicon">
+            <div className="purchase-order">
+              <div className="datastore">
+                <p>ร้านโคขุนเนื้อตุ้น</p>
+                <p>{po.puchaseoder_date}</p>
+                {po.puoder_status_id === 1 && (
+                  <p style={{ color: 'white', display: 'inline', padding: '5px', borderRadius: '5px', border: '1px solid orange',background: 'orange' }}>รอการชำระ</p>
+                )}
+                {po.puoder_status_id === 2 && (
+                  <p style={{ color: 'white', display: 'inline', padding: '5px', borderRadius: '5px', border: '1px solid red',background: 'red' }}>ยกเลิก</p>
+                )}
+                {po.puoder_status_id === 3 && (
+                  <p style={{ color: 'white', display: 'inline', padding: '5px', borderRadius: '5px', border: '1px solid green',background: 'green' }}>ชำระเเล้ว</p>
+                )}
+              </div>
+              <div className="status">
+                <div className="totalprice">
+                  <p>ราคาทั้งหมด</p>
+                  <p>฿{po.puchaseoder_ttprice}</p>
                 </div>
-              ))
-            ) : (
-              <p>Loading orders...</p>
+                <div className="countorder">
+                  <p>ออเดอร์</p>
+                  <p>1</p>     
+                </div>
+              </div>
+              <div className="butdetailoder">
+                <button onClick={() => handleExpandClick(po.puchaseoder_id)}>
+                  {expandedOrder === po.puchaseoder_id ? 'ซ่อนรายละเอียด' : 'ดูรายละเอียด'}
+                </button>
+              </div>
+            </div>
+            {expandedOrder === po.puchaseoder_id && (
+              <div className="order-details">
+                {orders[po.puchaseoder_id] ? (
+                  orders[po.puchaseoder_id].map((order) => (
+                    <div key={order.oder_id} className="order-item">
+                      <MDBTable>
+                        <MDBTableBody>
+                          <tr>
+                            <td>{order.name}</td>
+                            <td>{order.promo_name}</td>
+                            <td>{order.price}</td>
+                            {order.purchasetype_id === 1 && (
+                              <td>กลับบ้าน</td>
+                            )}
+                            {order.purchasetype_id === 2 && (
+                              <td>ที่ร้าน</td>
+                            )}
+                          </tr>
+                        </MDBTableBody>
+                      </MDBTable>
+                    </div>
+                  ))
+                ) : (
+                  <p>กำลังโหลดข้อมูลคำสั่งซื้อ...</p>
+                )}
+              </div>
             )}
           </div>
         ))
       ) : (
-        <p>No purchase orders found.</p>
+        <p>ไม่พบใบสั่งซื้อ</p>
       )}
     </div>
   );

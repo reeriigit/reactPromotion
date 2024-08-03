@@ -1,0 +1,41 @@
+.MenuDetailManager {
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    width: 400px;
+  }
+  
+  .MenuDetailManager div {
+    margin-bottom: 10px;
+  }
+  
+  .MenuDetailManager input {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+  }
+  
+  .MenuDetailManager button {
+    margin-top: 10px;
+    padding: 10px 15px;
+    cursor: pointer;
+  }
+  
+  .MenuDetailManager ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .MenuDetailManager li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .MenuDetailManager button {
+    margin-left: 10px;
+  }
+  

@@ -9,15 +9,42 @@
     height: 600px;
     position: relative;
     overflow-y: scroll;
+    background: white;
 }
 .Todolist .menuselect{
     display: flex;
     justify-content: center;
-    border: 1px solid #646464;
+    padding: 10px;
 }
 .Todolist .menuselect button{
     border: none;
     box-shadow: 1px 2px 5px #646464;
     border-radius: 5px;
-    padding: 5px;
+    margin: 5px;
+    padding: 5px 10px 5px 10px;
 }
+
+/* General button styling */
+.menuselect button {
+    background-color: #f0f0f0; /* สีพื้นหลังของปุ่มที่ไม่ได้เลือก */
+    border: 1px solid #ddd; /* ขอบของปุ่ม */
+    color: #333; /* สีตัวอักษร */
+    padding: 10px 20px; /* ขนาดของปุ่ม */
+    margin: 5px; /* ระยะห่างระหว่างปุ่ม */
+    border-radius: 5px; /* มุมปุ่ม */
+    cursor: pointer; /* เปลี่ยน cursor เป็นมือ */
+    font-size: 16px; /* ขนาดตัวอักษร */
+    transition: background-color 0.3s ease; /* การเปลี่ยนสีอย่างลื่นไหล */
+  }
+  
+  /* ปุ่มที่ถูกเลือก */
+  .menuselect button.active {
+    background-color: rgb(229, 189, 66); /* สีพื้นหลังของปุ่มที่เลือก */
+    color: #fff; /* สีตัวอักษรของปุ่มที่เลือก */
+    border: 1px solid rgb(229, 189, 66); /* ขอบของปุ่มที่เลือก */
+  }
+  
+  .menuselect button:hover {
+    background-color: #e0e0e0; /* สีพื้นหลังเมื่อ hover */
+  }
+  
