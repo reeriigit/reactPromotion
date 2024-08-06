@@ -172,6 +172,7 @@ function Order({ user_id, storeId, set_promotion_id, saveOder }) {
           <p>{promotion.promo_name}</p>
         </div>
         
+        
         <select
           name="purchasetype"
           id="purchasetype"
@@ -182,18 +183,25 @@ function Order({ user_id, storeId, set_promotion_id, saveOder }) {
           <option value="1">กลับบ้าน</option>
         </select>
 
-        <select
+        {purchaseType === 2 && (
+          <select
           name="compostore"
           value={selectedCompostore}
           onChange={(e) => setSelectedCompostore(e.target.value)}
         >
-          <option value="">ไม่มี</option>
+          <option value="ไม่มี">เลือก</option>
           {compostores.map((compo) => (
-            <option key={compo.compostore_id} value={compo.compostore_name}>
-              {compo.compostore_name}
-            </option>
+            compo.compo_status_id === 1 && (
+              <option key={compo.compostore_id} value={compo.compostore_name}>
+                {compo.compostore_name}
+              </option>
+            )
           ))}
         </select>
+
+        )}
+
+        
 
         <button onClick={handleMenudetail}>กำหนดเมนู</button>
         <div className="amountControl">

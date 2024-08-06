@@ -25,6 +25,7 @@ import SetPromotion from './stores/pages/SetPromotion';
 import Index from './web/Index';
 import Todolist from './web/pages/Todolist';
 import Listoforderers from './stores/pages/Listoforderers';
+import BasketList from './web/component/BasketList';
 
 
 
@@ -163,7 +164,19 @@ function App() {
             <Todolist />
           </React.Fragment>}
       />
+      <Route
+        path="/web/basket"
+        element={
+          <React.Fragment>
+            <BasketList/>
+          </React.Fragment>}
+      />
+
+
+
       </Routes>
+
+      
     </Router>
   );
 }

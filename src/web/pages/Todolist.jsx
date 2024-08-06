@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState  } from 'react';
 import { useLocation } from 'react-router-dom';
 import '../css/Todolist.css';
 import Order from '../component/Order';
@@ -16,6 +16,9 @@ const Completion = () => (
 function Todolist() {
   const location = useLocation();
   const { set_promotion_id, storeId, user_id } = location.state || {};
+
+
+  console.log("todolist user", user_id);
   console.log("shoooe  ww ", set_promotion_id);
   const [activeComponent, setActiveComponent] = useState('Order');
   const [currentSetPromotionId, setCurrentSetPromotionId] = useState(set_promotion_id);
@@ -40,14 +43,14 @@ function Todolist() {
       case 'Order':
         return (
           <Order
-            user_id={user_id.user_id}
+            user_id={user_id}
             set_promotion_id={currentSetPromotionId}
             storeId={storeId}
             saveOder={saveOder}
           />
         );
       case 'Ordereditems':
-        return <Ordereditems puoderStatusId={puoderStatusId} user_id={user_id.user_id} />;
+        return <Ordereditems puoderStatusId={puoderStatusId} user_id={user_id} />;
       case 'Completion':
         return <Completion />;
       default:
@@ -57,7 +60,7 @@ function Todolist() {
 
   return (
     <div className='Todolist'>
-      <Popuser user_id={user_id.user_id} />
+      <Popuser user_id={user_id} />
       <div className="menuselect">
         <button
           onClick={() => handleButtonClick('Order')}

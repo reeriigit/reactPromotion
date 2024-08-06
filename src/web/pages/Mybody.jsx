@@ -4,7 +4,7 @@ import Category from './Category';
 import Showforyou from './Showforyou';
 
 
-function Mybody(user_id) {
+function Mybody({user_id}) {
   console.log("my body = ",user_id)
   
   return (

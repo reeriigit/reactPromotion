@@ -68,4 +68,19 @@
   .containerorderlist .popup-close-button:hover {
     background-color: #5a6268;
   }
+
+  .containerorderlist > select{
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
   
+  select.status-select {
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    width: 100%;
+    max-width: 300px;
+  }

@@ -61,17 +61,24 @@
 
   }
   
-  .Ordereditems button {
+  .Ordereditems  .butdetailoder  button:last-child {
     padding: 10px;
     border: none;
-    background-color: #007bff;
+    background-color: #7dcc7d;
     color: white;
     border-radius: 5px;
     cursor: pointer;
     margin-bottom: 10px;
   }
   
-  .Ordereditems button:hover {
-    background-color: #0056b3;
+  .Ordereditems > button:hover {
+    background-color: #ff775f;
   }
-  
+  .Ordereditems > .popup {
+    text-align: center;
+   
+  }
+  .Ordereditems .butdetailoder > button{
+    display: block;
+
+  }

@@ -1,5 +1,3 @@
-// Product.jsx
-
 import '../css/Promotion.css';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -8,6 +6,8 @@ import { MDBCol } from "mdbreact";
 import Orderlist from '../components/Orderlist';
 import InsertProduct from '../components/InsertProduct';
 import UpdateProduct from '../components/UpdateProduct';
+import { QrReader } from 'react-qr-reader'; // Corrected import for QR code reader
+import '../css/Listoforderers.css';
 
 function Listoforderers() {
   const [activeComponent, setActiveComponent] = useState('Orderlist');
@@ -15,7 +15,8 @@ function Listoforderers() {
   const navigate = useNavigate();
   const [data, setStore] = useState(null);
   const [product_id, setProductId] = useState(null);
-  const [searchQuery, setSearchQuery] = useState(''); // สถานะใหม่สำหรับข้อความค้นหา
+  const [searchQuery, setSearchQuery] = useState('');
+  const [showScanner, setShowScanner] = useState(false);
 
   const handleButtonClick = (component) => {
     setActiveComponent(component);
@@ -26,7 +27,7 @@ function Listoforderers() {
       .then((res) => {
         setStore(res.data[0]);
       })
-      .catch((err) => console.log("i heare",err));
+      .catch((err) => console.log("Error fetching store data", err));
   }, [user_id]);
 
   const handleInsertProductSuccess = () => {
@@ -36,12 +37,28 @@ function Listoforderers() {
 
   const onchangeUpdate = (product_id) => {
     setProductId(product_id);
-    console.log("fuck you2 ",product_id);
+    console.log("Product ID: ", product_id);
     setActiveComponent('UpdateProduct');
   };
 
   const handleSearchChange = (e) => {
-    setSearchQuery(e.target.value); // จัดการการเปลี่ยนแปลงของข้อความค้นหา
+    setSearchQuery(e.target.value);
+  };
+
+  const handleScan = (data) => {
+    if (data) {
+      console.log("QR Code data: ", data);
+      setSearchQuery(data);
+      setShowScanner(false);
+      // Exits the function, stopping further execution
+    }
+
+  };
+  
+  
+
+  const handleError = (err) => {
+    console.error(err);
   };
 
   return (
@@ -54,10 +71,11 @@ function Listoforderers() {
               type="text" 
               placeholder="Search" 
               aria-label="Search" 
-              value={searchQuery} // กำหนดค่าของอินพุต
-              onChange={handleSearchChange} // เพิ่มฟังก์ชันจัดการการเปลี่ยนแปลง
+              value={searchQuery} 
+              onChange={handleSearchChange} 
             />
           </MDBCol>
+          <button onClick={() => setShowScanner(true)}>สเเกน</button>
         </div>
         <div className="barbutton">
           <button
@@ -90,6 +108,26 @@ function Listoforderers() {
           {activeComponent === 'InsertProduct' && <InsertProduct storeId={data && data.storeId} user_id={user_id} onInsertSuccess={handleInsertProductSuccess} />}
           {activeComponent === 'UpdateProduct' && <UpdateProduct storeId={data && data.storeId} product_id={product_id} onUpdateSuccess={handleInsertProductSuccess} />}
         </div>
+        {showScanner && (
+          <div className="scanner-overlay">
+            <div className="scanner-modal">
+              <QrReader
+                onResult={(result, error) => {
+                  if (result) {
+                    handleScan(result.getText());
+                    
+                  }
+                  if (error) {
+                    handleError(error);
+                  }
+                }}
+                constraints={{ facingMode: 'environment' }}
+                style={{ width: '100%' }}
+              />
+              <button className="close-button" onClick={() => setShowScanner(false)}>Close Scanner</button>
+            </div>
+          </div>
+        )}
       </div>
     </>
   );

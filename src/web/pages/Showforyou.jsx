@@ -3,8 +3,8 @@ import Showproduct from '../component/Showproduct';
 
 
 
-function Showforyou(user_id) {
-  user_id = user_id.user_id; //เพราะถ้าไม่ทำมันเป็น {{user_id}} จะเข้าถึง user_id.user_id
+function Showforyou({user_id}) {
+  //เพราะถ้าไม่ทำมันเป็น {{user_id}} จะเข้าถึง user_id.user_id
   console.log("show for you === ",user_id)
   return (
     <div className="Showforyou">

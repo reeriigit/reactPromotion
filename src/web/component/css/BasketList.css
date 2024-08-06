@@ -1,0 +1,21 @@
+.BasketList {
+    padding: 10px;
+}
+
+.BasketList .store-section{
+    position: relative;
+    box-shadow: 1px 2px 2px #939393;
+    margin-top: 10px;
+}
+
+.BasketList .store-section .basket-item{
+    display: flex;
+    padding: 10px;
+}
+.BasketList .store-section .basket-item >img{
+    border-radius: 5px;
+
+}
+.BasketList .store-section .basket-item > div{
+    padding-left: 20px;
+}

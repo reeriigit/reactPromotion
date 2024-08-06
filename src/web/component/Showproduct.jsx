@@ -3,7 +3,8 @@ import axios from 'axios';
 import './css/Showproduct.css';
 import DetailSetpro from './DetailSetpro';
 
-function Showproduct(user_id) {
+function Showproduct({user_id}) {
+
   console.log("show product ",user_id)
   const [products, setProducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);

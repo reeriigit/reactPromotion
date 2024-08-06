@@ -48,7 +48,7 @@ function Settings() {
               <button onClick={() => handleButtonClick('StoreProfile')}> <FaStoreAlt /> โปรไฟล์ร้านค้า</button>
             </div>
             <div>
-              <button onClick={() => handleButtonClick('ComponentStore')}>รายละอียด(โต๊ะ/ห้อง)</button>
+              <button onClick={() => handleButtonClick('ComponentStore')}>รายละเอียด(โต๊ะ/ห้อง)</button>
             </div>
             <div>
               <button onClick={() => handleButtonClick('Notifications')}>Notifications</button>
@@ -57,7 +57,7 @@ function Settings() {
           <div className="cols">
             {activeComponent === 'ProfileUser' && <EditUser user_id={user_id} />}
             {activeComponent === 'StoreProfile' && <EditStore user_id={user_id} />}
-            {activeComponent === 'ComponentStore' && <ComponentStore user_id={user_id} />}
+            {activeComponent === 'ComponentStore' && <ComponentStore user_id={user_id}  />}
             {activeComponent === 'Notifications' && <Notifications />}
           </div>
         </div>
