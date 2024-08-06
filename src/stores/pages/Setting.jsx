@@ -6,6 +6,7 @@ import EditStore from '../components/EditStore';
 import { FaUserAlt, FaStoreAlt } from 'react-icons/fa';
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import ComponentStore from '../components/ComponentStore';
 
 function Settings() {
   const [activeComponent, setActiveComponent] = useState('ProfileUser');
@@ -47,12 +48,16 @@ function Settings() {
               <button onClick={() => handleButtonClick('StoreProfile')}> <FaStoreAlt /> โปรไฟล์ร้านค้า</button>
             </div>
             <div>
+              <button onClick={() => handleButtonClick('ComponentStore')}>รายละอียด(โต๊ะ/ห้อง)</button>
+            </div>
+            <div>
               <button onClick={() => handleButtonClick('Notifications')}>Notifications</button>
             </div>
           </div>
           <div className="cols">
             {activeComponent === 'ProfileUser' && <EditUser user_id={user_id} />}
             {activeComponent === 'StoreProfile' && <EditStore user_id={user_id} />}
+            {activeComponent === 'ComponentStore' && <ComponentStore user_id={user_id} />}
             {activeComponent === 'Notifications' && <Notifications />}
           </div>
         </div>
