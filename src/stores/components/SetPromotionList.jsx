@@ -72,16 +72,15 @@ const SetPromotionList = ({ onchangeUpdate, storeId }) => {
 
   return (
     <div>
-      <h2>Set Promotions List</h2>
+      <h2>ทำโปรโมชั่น</h2>
       <MDBTable>
         <MDBTableHead>
           <tr>
-            <th>Select</th>
+            <th>เลือก</th>
             <th>#</th>
-            <th>Image</th>
-            <th>Promo Name</th>
-            <th>Product Name</th>
-            <th>Product ID</th>
+            <th>รูป</th>
+            <th>โปรโมชั่น</th>
+            <th>สินค้า</th>
             <th></th>
             <th>Actions</th>
           </tr>
@@ -117,7 +116,6 @@ const SetPromotionList = ({ onchangeUpdate, storeId }) => {
                 </td>
                 <td>{promotion.promo_name}</td>
                 <td>{promotion.name}</td>
-                <td>{promotion.storeId}</td>
                 <td>
                   <button className='buttondes' onClick={() => handleReadMore(promotion)}>
                     อ่าน

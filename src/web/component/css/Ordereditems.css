@@ -21,6 +21,7 @@
     width: 50%;
     border-radius: 20px;
     margin-left: 10px;
+    
   }
   .Ordereditems  .minicon .status > div >p:last-child{
 
@@ -60,7 +61,12 @@
     margin-bottom: 10px;
 
   }
-  
+  .Ordereditems  .butdetailoder  {
+    display: flex;
+    justify-content: space-around;
+    padding: 10px;
+
+  }
   .Ordereditems  .butdetailoder  button:last-child {
     padding: 10px;
     border: none;
@@ -79,6 +85,7 @@
    
   }
   .Ordereditems .butdetailoder > button{
-    display: block;
+    height: 50px
 
   }
+

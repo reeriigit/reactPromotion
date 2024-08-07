@@ -1,6 +1,7 @@
 .consetting{
     border: 1px solid #000;
     position: relative;
+    background: white;
     
 
 }
@@ -48,6 +49,7 @@
     padding: 20px;
     border-radius: 10px;
     height: auto;
+    background: white;
 }
 .rowset .cols:last-child{
     position: relative;

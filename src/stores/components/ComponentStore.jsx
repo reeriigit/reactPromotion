@@ -102,38 +102,28 @@ function ComponentStore({ user_id }) {
   };
 
   return (
-    <div>
+    <div className='containergrid'>
       <h1>Compostores</h1>
       <button onClick={handleAddCompostore}>Add Compostore</button>
-      <table>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Status ID</th>
-            <th>Store ID</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {compostores.map((compo) => (
-            <tr key={compo.compostore_id}>
-              <td>{compo.compostore_id}</td>
-              <td>{compo.compostore_name}</td>
-              <td>{compo.compo_status_id}</td>
-              <td>{compo.storeId}</td>
-              <td>
-                <button onClick={() => handleEditCompostore(compo)}>Edit</button>
-                <button onClick={() => handleDeleteCompostore(compo.compostore_id)}>Delete</button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <div className="compostore-grid">
+        {compostores.map((compo) => (
+          <div
+            key={compo.compostore_id}
+            className={`compostore-card ${compo.compo_status_id === 2 ? 'red-background' : ''}`}
+          >
+            <h2>{compo.compostore_name}</h2>
+            <div className="actions">
+              <button onClick={() => handleEditCompostore(compo)}>Edit</button>
+              <button onClick={() => handleDeleteCompostore(compo.compostore_id)}>Delete</button>
+            </div>
+          </div>
+        ))}
+      </div>
 
       {isModalOpen && (
         <div className="modal">
           <div className="modal-content">
+            <button className="close-button" onClick={() => setIsModalOpen(false)}>×</button>
             <h2>{selectedCompostore ? 'Edit Compostore' : 'Add Compostore'}</h2>
             <form onSubmit={handleSubmit}>
               <div>
@@ -185,6 +175,7 @@ function ComponentStore({ user_id }) {
           </div>
         </div>
       )}
+      
     </div>
   );
 }

@@ -6,9 +6,9 @@
     width: 400px;
   }
   
-  .MenuDetailManager div {
+  .MenuDetailManager > div {
     margin-bottom: 10px;
-  }
+  } 
   
   .MenuDetailManager input {
     width: 100%;

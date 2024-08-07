@@ -1,24 +1,79 @@
-/* Example CSS for modal */
-.modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .modal-content {
-    background: #fff;
-    padding: 20px;
-    border-radius: 5px;
-    text-align: center;
-  }
-  
-  .modal-content button {
-    margin: 0 10px;
-  }
-  
+/* Modal background overlay within compostore-grid */
+ .consetting .modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* Modal content box within compostore-grid */
+.consetting  .modal-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  position: relative;
+}
+
+/* Close button at the top right within compostore-grid */
+.consetting .modal-content .close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+/* Buttons at the bottom within compostore-grid */
+.consetting  .modal-content > button {
+  margin: 10px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.consetting .modal-content > button:hover {
+  background-color: #0056b3;
+}
+
+/* Grid layout for compostore cards */
+.consetting .compostore-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  padding: 10px;
+}
+
+/* Individual compostore card */
+.consetting .compostore-card {
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 1px 1px 3px #676666;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* Red background for compostore cards with status ID 2 */
+.consetting   .red-background {
+  background-color: red;
+  color: white;
+}
+
+.consetting .actions > button {
+  margin-right: 10px;
+}

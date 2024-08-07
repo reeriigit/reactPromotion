@@ -71,7 +71,6 @@ const PromotionsList = ({ onchangeUpdate,storeId }) => {
       <MDBTable>
         <MDBTableHead>
           <tr>
-            <th>ID {storeId}</th>
             <th>รูป</th>
             <th>ชื่อโปร</th>
             <th>ประเภท</th>
@@ -85,7 +84,6 @@ const PromotionsList = ({ onchangeUpdate,storeId }) => {
         <MDBTableBody>
           {currentItems.map((promotion) => (
             <tr key={promotion.promo_id}>
-              <td>{promotion.promo_id}</td>
               <td>
                 <img
                   src={`/proimages/${promotion.proimage}`}

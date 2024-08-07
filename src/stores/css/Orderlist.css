@@ -38,7 +38,7 @@
     text-align: left;
   }
   
-  .containerorderlist .order-details-table th {
+  .containerorderlist > .order-details-table > th {
     background-color: #007bff;
     color: white;
   }

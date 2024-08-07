@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import { useParams, NavLink } from 'react-router-dom';
+import { ImCreditCard } from "react-icons/im";
+import { TbCarambola } from "react-icons/tb";
+import { AiFillProduct, AiOutlineProduct } from "react-icons/ai";
+import { MdSettingsSuggest,MdDashboard } from "react-icons/md";
+
 
 
 import '../css/SidebarData.css';
 import {
-  FaTh,
   FaBars,
   FaUserAlt,
-  FaRegChartBar,
-  FaCommentAlt,
-  FaShoppingBag,
-  FaThList,
   FaCogs
 } from 'react-icons/fa';
 
@@ -27,39 +27,41 @@ const SidebarData = ({ children }) => {
       {
         path: `/stores/dashboard/${user_id}`,
         name: 'Dashboard',
-        icon: <FaTh />,
+        icon: <MdDashboard />,
       },
-      {
-        path: `/stores/Listoforderers/${user_id}`,
-        name: 'Listoforderers',
-        icon: <FaTh />,
-      },
-      
       {
         path: `/stores/store/${user_id}`,
         name: 'About',
         icon: <FaUserAlt />,
       },
       {
+        path: `/stores/Listoforderers/${user_id}`,
+        name: 'Listoforderers',
+        icon:  <ImCreditCard />,
+      },
+      
+     
+      {
         path: `/stores/setpromotion/${user_id}`,
         name: 'SetPromotion',
-        icon: <FaRegChartBar />,
+        icon: <MdSettingsSuggest />,
+      },
+      {
+        path: `/stores/promotions/${user_id}`,
+        name: 'Promotion',
+        icon: <TbCarambola />,
       },
       {
         path: `/stores/product/${user_id}`,
         name: 'Product',
-        icon: <FaCommentAlt />,
+        icon: <AiFillProduct />,
       },
       {
         path: `/stores/producttype/${user_id}`,
         name: 'ProductType',
-        icon: <FaShoppingBag />,
+        icon: <AiOutlineProduct />,
       },
-      {
-        path: `/stores/promotions/${user_id}`,
-        name: 'Product List',
-        icon: <FaThList />,
-      },
+ 
       {
         path: `/stores/setting/profile/${user_id}`, // Assuming you have a settings page
         name: 'Settings',

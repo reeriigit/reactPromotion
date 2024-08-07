@@ -93,10 +93,13 @@ function Ordereditems({ user_id, puoderStatusId }) {
                  <button onClick={() => handleQRCodeClick(po)}>
                     รหัสคำสั่งซื้อ
                   </button>
+                  
                 <button onClick={() => handleExpandClick(po.puchaseoder_id)}>
                   {expandedOrder === po.puchaseoder_id ? 'ซ่อนรายละเอียด' : 'ดูรายละเอียด'}
                 </button>
+                <button>{po.compostore_name}</button>
               </div>
+            
             </div>
             {expandedOrder === po.puchaseoder_id && (
               <div className="order-details">
