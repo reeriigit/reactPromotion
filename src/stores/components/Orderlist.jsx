@@ -115,8 +115,9 @@ const Orderlist = ({ storeId, searchQuery }) => {
                 <th>ใบสั่งซื้อ ไอดี</th>
                 <th>ชื่อผู้ใช้</th>
                 <th>เวลา</th>
-                <th>Status</th>
+                <th>สถานะ</th>
                 <th>ราคาทั้งหมด</th>
+                <th>โต๊ะ/ห้อง</th>
                 <th>รายการ</th>
               </tr>
             </MDBTableHead>
@@ -136,6 +137,7 @@ const Orderlist = ({ storeId, searchQuery }) => {
                     )}
                   </td>
                   <td>{po.puchaseoder_ttprice}</td>
+                  <td>{po.compostore_name}</td>
                   <td>
                     <button className='btn btn-info' onClick={() => handleReadMore(po.puchaseoder_id)}>
                       ดูรายการ
@@ -171,6 +173,7 @@ const Orderlist = ({ storeId, searchQuery }) => {
                           <td>
                             {order.purchasetype_id === 1 ? "กลับบ้าน" : "ที่ร้าน"}
                           </td>
+                         
                         </tr>
                       ))}
                     </MDBTableBody>
